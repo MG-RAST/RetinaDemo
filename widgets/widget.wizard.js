@@ -9,19 +9,19 @@
     });
 
     widget.setup = function () {
-	return [ Retina.add_renderer({"name": "heatmap", "resource": "renderers/",  "filename": "renderer.heatmap.js" }),
+	return [ Retina.add_renderer({"name": "heatmap", "resource": "Retina/renderers/",  "filename": "renderer.heatmap.js" }),
 		 Retina.load_renderer("heatmap"),
-		 Retina.add_renderer({"name": "listselect", "resource": "renderers/",  "filename": "renderer.listselect.js" }),
+		 Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
 		 Retina.load_renderer("listselect"),
-		 Retina.add_renderer({"name": "table", "resource": "renderers/",  "filename": "renderer.table.js" }),
+		 Retina.add_renderer({"name": "table", "resource": "Retina/renderers/",  "filename": "renderer.table.js" }),
 		 Retina.load_renderer("table"),
-		 Retina.add_renderer({"name": "plot", "resource": "renderers/",  "filename": "renderer.plot.js" }),
+		 Retina.add_renderer({"name": "plot", "resource": "Retina/renderers/",  "filename": "renderer.plot.js" }),
 		 Retina.load_renderer("plot"),
-		 Retina.add_renderer({"name": "graph", "resource": "renderers/",  "filename": "renderer.graph.js" }),
+		 Retina.add_renderer({"name": "graph", "resource": "Retina/renderers/",  "filename": "renderer.graph.js" }),
 		 Retina.load_renderer("graph"),
-		 Retina.add_renderer({"name": "deviationplot", "resource": "renderers/",  "filename": "renderer.deviationplot.js" }),
+		 Retina.add_renderer({"name": "deviationplot", "resource": "Retina/renderers/",  "filename": "renderer.deviationplot.js" }),
 		 Retina.load_renderer("deviationplot"),
-		 Retina.add_renderer({"name": "boxplot", "resource": "renderers/",  "filename": "renderer.boxplot.js" }),
+		 Retina.add_renderer({"name": "boxplot", "resource": "Retina/renderers/",  "filename": "renderer.boxplot.js" }),
 		 Retina.load_renderer("boxplot")
 	       ];
     };
@@ -43,7 +43,7 @@
 	    var progress = document.createElement('div');
 	    progress.innerHTML = '<div class="alert alert-block alert-info" id="progressIndicator" style="position: absolute; top: 250px; width: 400px; right: 38%;">\
 <button type="button" class="close" data-dismiss="alert">×</button>\
-<h4><img src="images/loading.gif"> Please wait...</h4>\
+<h4><img src="Retina/images/loading.gif"> Please wait...</h4>\
 <p>The data to be displayed is currently loading.</p>\
 <p id="progressBar"></p>\
 </div>';
@@ -56,7 +56,7 @@
 		}
 		widget.display(wparams);
             }).fail( function() {
-		stm.get_objects({"type": "metagenome", "options": {"status": "public", "verbosity": "mixs", "limit": '100000'}}).then(function() {
+		stm.get_objects({"type": "metagenome", "options": {"status": "public", "verbosity": "mixs", "limit": '9999'}}).then(function() {
                     widget.display(wparams);
 		});
 	    });
@@ -146,7 +146,7 @@ With the KBase metagenomics wizard, you can design your metagenomic sequencing e
 		    widget.display(wparams);
 		});
 
-		target.innerHTML = "<p style='position: absolute; top: 300px; left: 37%;'><img src='images/loading.gif'> loading stats <span id='stats_progress'></span></p>\
+		target.innerHTML = "<p style='position: absolute; top: 300px; left: 37%;'><img src='Retina/images/loading.gif'> loading stats <span id='stats_progress'></span></p>\
 <div class='progress' style='width: 400px; position: absolute; top: 350px; left: 37%;'>\
   <div class='bar' id='stats_progress_bar' style='width: 0%;'></div>\
 </div>";

@@ -15,9 +15,9 @@
 	    stm.DataStore.metagenome = {};
 	}
 
-	return [ Retina.add_renderer({"name": "heatmap", "resource": "./renderers/",  "filename": "renderer.heatmap.js" }),
+	return [ Retina.add_renderer({"name": "heatmap", "resource": "Retina/renderers/",  "filename": "renderer.heatmap.js" }),
   		 Retina.load_renderer("heatmap"),
-		 Retina.add_renderer({"name": "listselect", "resource": "./renderers/",  "filename": "renderer.listselect.js" }),
+		 Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
   		 Retina.load_renderer("listselect") ];
     };
 
@@ -201,7 +201,7 @@
 
 							      document.getElementById('loading_status').innerHTML = '<div class="alert alert-block alert-info">\
 <button type="button" class="close" data-dismiss="alert">×</button>\
-<h4><img src="images/loading.gif"> Please wait...</h4>\
+<h4><img src="Retina/images/loading.gif"> Please wait...</h4>\
 <p>The data to be displayed is currently loading.</p>\
 <div class="progress" style="margin-top: 10px;margin-bottom:0px;"><div class="bar" id="pbar" style="width: 0%;"></div></div>\
 </div>';

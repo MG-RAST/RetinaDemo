@@ -9,13 +9,13 @@
     });
 
     widget.setup = function () {
-	return [ Retina.add_renderer({"name": "listselect", "resource": "renderers/",  "filename": "renderer.listselect.js" }),
+	return [ Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
 		 Retina.load_renderer("listselect"),
-		 Retina.add_renderer({"name": "groupselect", "resource": "renderers/",  "filename": "renderer.groupselect.js" }),
+		 Retina.add_renderer({"name": "groupselect", "resource": "Retina/renderers/",  "filename": "renderer.groupselect.js" }),
 		 Retina.load_renderer("groupselect"),
-		 Retina.add_renderer({"name": "table", "resource": "renderers/",  "filename": "renderer.table.js" }),
+		 Retina.add_renderer({"name": "table", "resource": "Retina/renderers/",  "filename": "renderer.table.js" }),
 		 Retina.load_renderer("table"),
-		 Retina.add_renderer({"name": "graph", "resource": "renderers/",  "filename": "renderer.graph.js" }),
+		 Retina.add_renderer({"name": "graph", "resource": "Retina/renderers/",  "filename": "renderer.graph.js" }),
 		 Retina.load_renderer("graph")
 	       ];
     };
@@ -71,7 +71,7 @@
 							      callback: function (data) {
 								  widget.target.innerHTML = '<div class="alert alert-block alert-info" style="position: absolute; top: 250px; width: 400px; right: 38%;">\
 <button type="button" class="close" data-dismiss="alert">×</button>\
-<h4><img src="images/loading.gif"> Please wait...</h4>\
+<h4><img src="Retina/images/loading.gif"> Please wait...</h4>\
 <p>The data to be displayed is currently loading.</p>\
 </div>';
 								  var promises = [];
@@ -111,7 +111,7 @@
 		if (document.getElementById('loading_status')) {
 	 	    document.getElementById('loading_status').innerHTML = '<div class="alert alert-block alert-info" style="width: 400px;">\
 <button type="button" class="close" data-dismiss="alert">×</button>\
-<h4><img src="images/loading.gif"> Please wait...</h4>\
+<h4><img src="Retina/images/loading.gif"> Please wait...</h4>\
 <p>The data to be displayed is currently loading.</p>\
 </div>';
 		}
