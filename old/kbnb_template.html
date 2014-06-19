@@ -6,40 +6,32 @@
     <title></title>
     
     <!--external javascript files-->
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="Retina/js/jquery.min.js"></script>
+    <script type="text/javascript" src="Retina/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="Retina/js/bootstrap.min.js"></script>
     
     <!--basic javascript files-->
     <script type="text/javascript" src="js/config.js"></script>
-    <script type="text/javascript" src="js/stm.js"></script>
-    <script type="text/javascript" src="js/retina.js"></script>
+    <script type="text/javascript" src="Retina/js/stm.js"></script>
+    <script type="text/javascript" src="Retina/js/retina.js"></script>
     
     <!--style-->
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
     
     <!--initialization-->
     <script type="text/javascript">
     jQuery(function () {
-        var builder_widget = 'NotebookExecuter';
-      	stm.init(stm.Config.kbase_api, false, 'kbase').then(function() {
-      	    stm.add_repository(stm.Config.mgrast_api, false, false, 'mgrast').then(function () {
-	            Retina.init({ library_resource: "js/" });
-	            Retina.add_widget({"name": "NotebookDashboard", "resource": "widgets/", "filename": "widget.NotebookDashboard.js"});
-	            Retina.add_widget({"name": builder_widget, "resource": "widgets/", "filename": "widget."+builder_widget+".js"});
-      	        Retina.load_widget("NotebookDashboard").then(function () {
-      	            var val  = document.URL;
-		            var logo = "MG-RAST";
-		            if (val.indexOf("kbase") > -1) {
-		                logo = "KBase";
-		            }
-		            Retina.load_widget(builder_widget).then(function () {
-		                var cache = true;
-		                Retina.Widget.create('NotebookDashboard', {"target": "dashboard", "notebook": "nb_iframe", "builder": builder_widget, "cache": cache, "logo": logo});	
-		            });
-	            });
-      	    });
-  	    });
+        var builder_widget = '';
+      	stm.init('https://kbase.us/services/search-api/search', false, 'kbase').then(function() {
+	        Retina.init({ library_resource: "Retina/js/" });
+	        Retina.add_widget({"name": "NotebookDashboard", "resource": "widgets/", "filename": "widget.NotebookDashboard.js"});
+	        Retina.add_widget({"name": builder_widget, "resource": "widgets/", "filename": "widget."+builder_widget+".js"});
+      	    Retina.load_widget("NotebookDashboard").then(function () {
+		        Retina.load_widget(builder_widget).then(function () {
+		            Retina.Widget.create('NotebookDashboard', {"target": "dashboard", "notebook": "nb_iframe", "builder": builder_widget, "logo": "KBase"});	
+		        });
+	        });
+      	});
     });
     </script>
     

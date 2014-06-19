@@ -4,21 +4,20 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>KEGG Mapper</title>
     <link rel="icon" href="images/MGRAST_favicon.ico" type="image/x-icon">
-	<script src="js/jquery.min.js"></script>
+	<script src="Retina/js/jquery.min.js"></script>
 	<script src="js/config.js"></script>
-	<script src="js/stm.js"></script>
-	<script src="js/retina.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<script src="Retina/js/stm.js"></script>
+	<script src="Retina/js/retina.js"></script>
+	<script src="Retina/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
 	<script>
-    stm.init('http://api.metagenomics.anl.gov').then(function() {
-	Retina.init( { library_resource: "js/" } ).then( function () {
+    stm.init({ url: stm.Config.mgrast_api }, 1, "MG-RAST");
+	Retina.init( { library_resource: "Retina/js/" } ).then( function () {
 	    Retina.add_widget({"name": "kegg", "resource": "widgets/",  "filename": "widget.kegg.js" });
 	    Retina.load_widget("kegg").then( function () {
 		Retina.Widget.create('kegg', { target: document.getElementById('content') });
 	    });
 	});
-    });
 	</script>
   </head>
 <body style="margin-top: 60px; margin-bottom: 100px;">
