@@ -411,17 +411,22 @@
 	    modifyBar.appendChild(downloadButton);
 	}
 
-	var deleteButton = document.createElement('button');
-	deleteButton.className = "btn btn-menu btn-small";
-	deleteButton.title = "delete selected file";
-	deleteButton.innerHTML = "<img src='Retina/images/remove.png' style='height: 16px;'>";
-	deleteButton.addEventListener('click', function(){
-	    var widget = Retina.WidgetInstances.shockbrowse[1];
-	    alert('not implemented');
-	});
-	//modifyBar.appendChild(deleteButton);
-
 	toolBar.appendChild(modifyBar);
+
+	// update bar
+	var updateBar = document.createElement('div');
+	updateBar.className = "btn-group";
+
+	var refreshButton = document.createElement('button');
+	refreshButton.className = "btn btn-menu btn-small";
+	refreshButton.title = "refresh file list";
+	refreshButton.innerHTML = "<img src='Retina/images/loop.png' style='height: 16px;'>";
+	refreshButton.addEventListener('click', function(){
+	    Retina.WidgetInstances.shockbrowse[1].updateDisplay();
+	});
+	updateBar.appendChild(refreshButton);
+
+	toolBar.appendChild(updateBar);
 
 	// detail type
 	var detailBar = document.createElement('div');
@@ -458,18 +463,6 @@
 	if (widget.showDetailBar) {
 	    toolBar.appendChild(detailBar);
 	}
-
-	// search bar
-	var searchBar = document.createElement('div');
-	searchBar.setAttribute("style", "display: inline-block; margin-left: 10px;");
-
-	var searchField = document.createElement('input');
-	searchField.type = "text";
-	searchField.setAttribute('style', "border-radius: 13px; height: 13px; position: relative; top: 1px; margin-bottom: 0px;");
-	searchField.setAttribute('placeholder', "enter searchtext");
-	searchBar.appendChild(searchField);
-
-	//toolBar.appendChild(searchBar);
 
 	section.appendChild(toolBar);
     };
