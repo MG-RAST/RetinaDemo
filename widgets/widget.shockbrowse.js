@@ -51,12 +51,10 @@
     
     widget.setup = function () {
 	return [ 
- 	    Retina.add_renderer({"name": "table", "resource": "./renderers/",  "filename": "renderer.table.js" }),
+ 	    Retina.add_renderer({"name": "table", "resource": "Retina/renderers/",  "filename": "renderer.table.js" }),
   	    Retina.load_renderer("table"),
- 	    Retina.add_renderer({"name": "listselect", "resource": "./renderers/",  "filename": "renderer.listselect.js" }),
+ 	    Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
   	    Retina.load_renderer("listselect"),
- 	    Retina.add_renderer({"name": "tree", "resource": "./renderers/",  "filename": "renderer.tree.js" }),
-  	    Retina.load_renderer("tree")
 	];
     };
 
@@ -95,7 +93,7 @@
     widget.title = "SHOCK Browser";
 
     // status bar text
-    widget.status = "<img src='images/waiting.gif' style='height: 15px;'> connecting to SHOCK server...";
+    widget.status = "<img src='Retina/images/waiting.gif' style='height: 15px;'> connecting to SHOCK server...";
 
     // interface default settings
     widget.detailInfo = null;
@@ -306,11 +304,11 @@
 	var resizer = document.createElement('div');
 	resizer.setAttribute('style', "float: left;");
 	resizer.innerHTML = '\
-<img src="images/box.png" style="margin-left: 10px; margin-right: 5px; width: 16px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'large\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'large\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
+<img src="Retina/images/box.png" style="margin-left: 10px; margin-right: 5px; width: 16px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'large\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'large\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
 \
-<img src="images/box.png" style="margin-right: 5px; width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'medium\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'medium\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
+<img src="Retina/images/box.png" style="margin-right: 5px; width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'medium\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'medium\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
 \
-<img src="images/box.png" style="width: 8px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
+<img src="Retina/images/box.png" style="width: 8px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
 ';
 	if (widget.showResizer) {
 	    section.appendChild(resizer);
@@ -351,7 +349,7 @@
 	    var uploadButton = document.createElement('button');
 	    uploadButton.className = "btn btn-menu btn-small";
 	    uploadButton.title = "upload file";
-	    uploadButton.innerHTML = "<img src='images/upload.png' style='height: 16px;'><div id='progress_button_progress' style='bottom: 20px; position: relative; margin-right: -11px; background-color: green; height: 26px; margin-top: -2px; margin-left: -10px; width: 0px; opacity: 0.4;'></div>";
+	    uploadButton.innerHTML = "<img src='Retina/images/upload.png' style='height: 16px;'><div id='progress_button_progress' style='bottom: 20px; position: relative; margin-right: -11px; background-color: green; height: 26px; margin-top: -2px; margin-left: -10px; width: 0px; opacity: 0.4;'></div>";
 	    uploadButton.addEventListener('click', function(){ Retina.WidgetInstances.shockbrowse[1].uploadDialog.click(); });
 	    uploadBar.appendChild(uploadButton);
 	    widget.uploadButton = uploadButton;
@@ -381,7 +379,7 @@
 	    var downloadButton = document.createElement('button');
 	    downloadButton.className = "btn btn-menu btn-small";
 	    downloadButton.title = "download selected file";
-	    downloadButton.innerHTML = "<img src='images/download.png' style='height: 16px;'>";
+	    downloadButton.innerHTML = "<img src='Retina/images/download.png' style='height: 16px;'>";
 	    downloadButton.addEventListener('click', function(){
 		var widget = Retina.WidgetInstances.shockbrowse[1];
 		if (widget.selectedFile) {
@@ -416,7 +414,7 @@
 	var deleteButton = document.createElement('button');
 	deleteButton.className = "btn btn-menu btn-small";
 	deleteButton.title = "delete selected file";
-	deleteButton.innerHTML = "<img src='images/remove.png' style='height: 16px;'>";
+	deleteButton.innerHTML = "<img src='Retina/images/remove.png' style='height: 16px;'>";
 	deleteButton.addEventListener('click', function(){
 	    var widget = Retina.WidgetInstances.shockbrowse[1];
 	    alert('not implemented');
@@ -452,7 +450,7 @@
 	    }
 	    button.className = "btn btn-menu btn-small"+active;
 	    button.title = types[i];
-	    button.innerHTML = "<img src='images/"+types[i]+".png' style='height: 16px;'>";
+	    button.innerHTML = "<img src='Retina/images/"+types[i]+".png' style='height: 16px;'>";
 	    button.setAttribute('onclick', "Retina.WidgetInstances.shockbrowse[1].detailType='"+types[i]+"';Retina.WidgetInstances.shockbrowse[1].showDetails(null, true);");
 	    detailBar.appendChild(button);
 	}
@@ -691,9 +689,9 @@
 	var authContainer = document.createElement('div');
 	authContainer.setAttribute("style", "float: right; width: 100px; margin-right: 10px; height: 16px; position: relative; top: 2px; text-align: right;");
 	if (widget.user) {
-	    authContainer.innerHTML = '<img src="images/lock.png" style="width: 16px; position: relative; bottom: 3px;" title="authenticated as '+widget.user.firstname+' '+widget.user.lastname+'">';
+	    authContainer.innerHTML = '<img src="Retina/images/lock.png" style="width: 16px; position: relative; bottom: 3px;" title="authenticated as '+widget.user.firstname+' '+widget.user.lastname+'">';
 	} else {
-	    authContainer.innerHTML = '<img src="images/unlocked.png" style="width: 16px; position: relative; bottom: 3px;" title="not authenticated">';
+	    authContainer.innerHTML = '<img src="Retina/images/unlocked.png" style="width: 16px; position: relative; bottom: 3px;" title="not authenticated">';
 	}
 	widget.sections.authContainer = authContainer;
 	section.appendChild(authContainer);
@@ -739,14 +737,14 @@
 	    }
 	}
 	widget.data = null;
-	widget.status = "<img src='images/waiting.gif' style='height: 15px;'> connecting to SHOCK server...";
+	widget.status = "<img src='Retina/images/waiting.gif' style='height: 15px;'> connecting to SHOCK server...";
 	widget.updateData();
     };
     
     widget.updateData = function () {
 	var widget = Retina.WidgetInstances.shockbrowse[1];
 
-	widget.status = "<img src='images/waiting.gif' style='height: 15px;'> fetching data...";
+	widget.status = "<img src='Retina/images/waiting.gif' style='height: 15px;'> fetching data...";
 	widget.status_bar();
 	
 	var url = widget.shockBase + "/node/?limit="+widget.currentLimit+"&offset="+widget.currentOffset;
@@ -833,7 +831,7 @@
 	var html;
 	var height = parseInt((widget.height - 85) / 2) - 50;
 
-	var detailInfo = widget.detailInfo || "<div style='padding-top: "+height+"px; text-align: center;'><img src='images/waiting.gif' style='width: 25px;'></div>";
+	var detailInfo = widget.detailInfo || "<div style='padding-top: "+height+"px; text-align: center;'><img src='Retina/images/waiting.gif' style='width: 25px;'></div>";
 
 	if (widget.detailType == "info") {
 	    html = "<h4>file information - "+fn+"</h4><table style='text-align: left; font-size: "+widget.fontSize+"px;'>\
@@ -1497,7 +1495,7 @@
 	// get the section
 	var section = Retina.WidgetInstances.shockbrowse[1].sections.detailSectionContent;
 
-	section.innerHTML = "<h4>Resumable Uploads</h4><div style='text-align: center; margin-top: 100px;'>loading<br><img src='images/waiting.gif' style='width: 25px;'></div>";
+	section.innerHTML = "<h4>Resumable Uploads</h4><div style='text-align: center; margin-top: 100px;'>loading<br><img src='Retina/images/waiting.gif' style='width: 25px;'></div>";
 	
 	jQuery.ajax({ url: url,
 		      dataType: "json",
