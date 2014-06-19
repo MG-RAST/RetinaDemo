@@ -3,18 +3,18 @@
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <title>PNNL: Metagenomics Pipeline</title>
-    <script src="js/jquery.min.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/stm.js"></script>
-    <script src="js/retina.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <script src="Retina/js/jquery.min.js"></script>
+    <script src="Retina/js/config.js"></script>
+    <script src="Retina/js/stm.js"></script>
+    <script src="Retina/js/retina.js"></script>
+    <script src="Retina/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
     <script>
-    Retina.init( { library_resource: "js/" } ).then( function() {
+    Retina.init( { library_resource: "Retina/js/" } ).then( function() {
 	Retina.add_widget({"name": "pnnl", "resource": "widgets/",  "filename": "widget.pnnl.js"});
 	Retina.load_widget("pnnl").then( function() {
 	    Retina.Widget.create("pnnl", {"target": document.getElementById("content")});
-	    Retina.add_widget({"name": "login", "resource": "widgets/",  "filename": "widget.login.js"});
+	    Retina.add_widget({"name": "login", "resource": "Retina/widgets/",  "filename": "widget.login.js"});
 	    Retina.load_widget("login").then( function() {
 		Retina.Widget.create("login", { "target": document.getElementById("loginContainer"),
 						"callback": Retina.WidgetInstances.shockbrowse[1].loginAction,

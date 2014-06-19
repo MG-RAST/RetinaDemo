@@ -383,7 +383,7 @@
 	    downloadButton.addEventListener('click', function(){
 		var widget = Retina.WidgetInstances.shockbrowse[1];
 		if (widget.selectedFile) {
-		    jQuery.ajax({ url: widget.shockBase + "/node/" + widget.selectedFile.getAttribute('fi') + "?download_url",
+		    jQuery.ajax({ url: widget.shockBase + "/node/" + widget.selectedFile.getAttribute('fi') + "?download_url&filename="+widget.selectedFile.innerHTML,
 				  dataType: "json",
 				  success: function(data) {
 				      var widget = Retina.WidgetInstances.shockbrowse[1];
@@ -422,7 +422,7 @@
 	refreshButton.title = "refresh file list";
 	refreshButton.innerHTML = "<img src='Retina/images/loop.png' style='height: 16px;'>";
 	refreshButton.addEventListener('click', function(){
-	    Retina.WidgetInstances.shockbrowse[1].updateDisplay();
+	    Retina.WidgetInstances.shockbrowse[1].updateData();
 	});
 	updateBar.appendChild(refreshButton);
 
@@ -572,7 +572,7 @@
 	    for (var i=widget.currentOffset; i<widget.data.data.length; i++) {
 		var ds = widget.data.data[i];
 		var fn = ds.file.name || ds.id;
-		html += "<div id='file"+ds.id+"' class='fileItem' fi='"+ds.id+"' onclick='Retina.WidgetInstances.shockbrowse[1].showDetails(event);' draggable='true' data-downloadurl='application/octet-stream:"+fn+":"+widget.shockBase + "/node/" + ds.id + "?download'>" + fn + "</div>";
+		html += "<div id='file"+ds.id+"' class='fileItem' fi='"+ds.id+"' onclick='Retina.WidgetInstances.shockbrowse[1].showDetails(event);' draggable='true' data-downloadurl='application/octet-stream:"+fn+":"+widget.shockBase + "/node/" + ds.id + "?download&filename="+fn+"'>" + fn + "</div>";
 	    }
 	    if (widget.append) {
 		sectionContent.innerHTML += html;
@@ -829,6 +829,7 @@
 	if (widget.detailType == "info") {
 	    html = "<h4>file information - "+fn+"</h4><table style='text-align: left; font-size: "+widget.fontSize+"px;'>\
 <tr><th style='width: 75px;'>name</th><td>"+fn+"</td></tr>\
+<tr><th style='width: 75px;'>node id</th><td>"+node.id+"</td></tr>\
 <tr><th>created</th><td>"+node.created_on+"</td></tr>\
 <tr><th>modified</th><td>"+node.last_modified+"</td></tr>\
 <tr><th>size</th><td>"+node.file.size.formatString()+"</td></tr>\

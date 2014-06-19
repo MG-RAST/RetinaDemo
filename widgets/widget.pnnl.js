@@ -134,17 +134,17 @@
 		currentStage--;
 	    }
 	    if (stages[currentStage].state == "completed") {
-		return '<img class="miniicon" src="images/ok.png"><span class="green">completed</span>';
+		return '<img class="miniicon" src="Retina/images/ok.png"><span class="green">completed</span>';
 	    } else if (stages[currentStage].state == "in-progress") {
-		return '<img class="miniicon" src="images/settings3.png"><span class="blue">running</span>';
+		return '<img class="miniicon" src="Retina/images/settings3.png"><span class="blue">running</span>';
 	    } else if (stages[currentStage].state == "queued") {
-		return '<img class="miniicon" src="images/clock.png"><span class="orange">queued</span>';
+		return '<img class="miniicon" src="Retina/images/clock.png"><span class="orange">queued</span>';
 	    } else if (stages[currentStage].state == "pending") {
-		return '<img class="miniicon" src="images/clock.png"><span class="gray">pending</span>';
+		return '<img class="miniicon" src="Retina/images/clock.png"><span class="gray">pending</span>';
 	    } else if (stages[currentStage].state == "error") {
-		return '<img class="miniicon" src="images/remove.png"><span class="red">error</span>';
+		return '<img class="miniicon" src="Retina/images/remove.png"><span class="red">error</span>';
 	    } else if (stages[currentStage].state == "suspend") {
-		return '<img class="miniicon" src="images/remove.png"><span class="red">suspended</span>';
+		return '<img class="miniicon" src="Retina/images/remove.png"><span class="red">suspended</span>';
 	    } else {
 		console.log("unhandled state: "+stages[currentStage].state);
 		return "";
