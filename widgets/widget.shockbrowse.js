@@ -422,7 +422,7 @@
 	refreshButton.title = "refresh file list";
 	refreshButton.innerHTML = "<img src='Retina/images/loop.png' style='height: 16px;'>";
 	refreshButton.addEventListener('click', function(){
-	    Retina.WidgetInstances.shockbrowse[1].updateDisplay();
+	    Retina.WidgetInstances.shockbrowse[1].updateData();
 	});
 	updateBar.appendChild(refreshButton);
 
