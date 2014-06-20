@@ -852,7 +852,7 @@
 			      },
 			      error: function(jqXHR, error) {
 				  var widget = Retina.WidgetInstances.shockbrowse[1];
-				  widget.detailInfo = "<div class='alert alert-error'>Unable to retrieve access right information<br>You must be the owner of the node to see this data.</div>";
+				  widget.detailInfo = "<div class='alert alert-error' style='text-align: center;'>Unable to retrieve access right information<br>You must be the owner of the node to see this data.<br><br><button class='btn' onclick='document.getElementById(\"filter_value\").value=\"owner="+Retina.WidgetInstances.shockbrowse[1].user.login+"\";Retina.WidgetInstances.shockbrowse[1].refineFilter(\"add\", null, true);'>show only files I own</button></div>";
 				  widget.showDetails(null, true);
 			      },
 			      headers: widget.authHeader
@@ -990,7 +990,7 @@
 		    });
     };
 
-    widget.refineFilter = function (action, item) {
+    widget.refineFilter = function (action, item, custom) {
 	widget = Retina.WidgetInstances.shockbrowse[1];
 	
 	// get the DOM space for the buttons
@@ -1000,7 +1000,7 @@
 
 	    // add key and value to the filters
 	    var skeyList = document.getElementById('filter_key');
-	    var skey = skeyList.options[skeyList.selectedIndex].value;
+	    var skey = custom ? "_custom_" : skeyList.options[skeyList.selectedIndex].value;
 	    var sname = skeyList.options[skeyList.selectedIndex].text;
 	    var sval = document.getElementById('filter_value').value;
 
