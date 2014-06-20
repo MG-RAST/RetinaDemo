@@ -1,7 +1,7 @@
 (function () {
     widget = Retina.Widget.extend({
         about: {
-                title: "SHOCK Browser Widget for Docker Images",
+                title: "Docker Images",
                 name: "dockerimages",
                 author: "Tobias Paczian",
                 requires: [ "AuxStore.js" ]
@@ -17,7 +17,7 @@
 	];
     };
 
-    widget.headers = {};
+    widget.authHeader = {};
 
     widget.shock_base = "http://shock.metagenomics.anl.gov/node";
     widget.shock_url = widget.shock_base + "?query&type=dockerimage";
@@ -54,7 +54,7 @@
 	    synchronous: false,
 	    disable_sort: disable_sort,
 	    query_type: 'prefix',
-	    headers: widget.headers,
+	    headers: widget.authHeader,
 	    data_manipulation: widget.dataManipulation,
 	    asynch_column_mapping: { "name": "name",
 				     "base_image_tag": "base_image_tag",
@@ -122,7 +122,7 @@
 			    "GoVersion": data[i].attributes.docker_version.GoVersion,
 			    "KernelVersion": data[i].attributes.docker_version.KernelVersion,
 			    "Os": data[i].attributes.docker_version.Os,
-			    "Size": data[i].file.size });
+			    "Size": data[i].file.size.byteSize() });
 	}
 	return new_data;
     };
@@ -140,11 +140,11 @@
     widget.loginAction = function (action) {
 	var widget = Retina.WidgetInstances.dockerimages[1];
 	if (action.action == "login" && action.result == "success") {
-	    widget.authHeader = { "Authorization": "OAuth "+action.token };
+	    widget.result_table.settings.headers = { "Authorization": "OAuth "+action.token };
 	} else {
-	    widget.authHeader = {};
+	    widget.result_table.settings.headers = {};
 	}
-	widget.display();
+	widget.update();
     };
     
 })();
