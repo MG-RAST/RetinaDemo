@@ -189,7 +189,7 @@
 	widget.fileWidth = Math.floor((widget.width - filterWidth) / 2) - 5;
 	widget.detailWidth = Math.floor((widget.width - filterWidth) / 2) - 5;
 
-	widget.topHeight = widget.showTopSection ? (widget.showTitleBar ? 50 : 40) : 0;
+	widget.topHeight = widget.showTopSection ? (widget.showTitleBar ? 52 : 40) : 0;
 	widget.middleHeight = widget.height - (widget.showStatusBar ? (22 + widget.topHeight) : (1 + widget.topHeight));
 
 	widget.sections = {};
@@ -330,7 +330,7 @@
 	}
 
 	var toolBar = document.createElement('div');
-	toolBar.setAttribute("style", "position: relative; bottom: 4px; margin-left: "+(widget.showFilter ? widget.filterWidth : "0")+"px;");
+	toolBar.setAttribute("style", "position: relative; margin-left: "+(widget.showFilter ? widget.filterWidth : "0")+"px;");
 
 	if (widget.enableUpload) {
 	    // upload bar
@@ -852,7 +852,11 @@
 			      },
 			      error: function(jqXHR, error) {
 				  var widget = Retina.WidgetInstances.shockbrowse[1];
-				  widget.detailInfo = "<div class='alert alert-error'>Unable to retrieve access right information<br>You must be the owner of the node to see this data.</div>";
+				  widget.detailInfo = "<div class='alert alert-error' style='text-align: center;'>Unable to retrieve access right information<br>You must be the owner of the node to see this data.";
+				  if (widget.showFilter && widget.querymode == "full" && widget.user) {
+				      widget.detailInfo += "<br><br><button class='btn' onclick='document.getElementById(\"filter_value\").value=\"owner="+Retina.WidgetInstances.shockbrowse[1].user.login+"\";Retina.WidgetInstances.shockbrowse[1].refineFilter(\"add\", null, true);'>show only files I own</button>";
+				  }
+				  widget.detailInfo += "</div>";
 				  widget.showDetails(null, true);
 			      },
 			      headers: widget.authHeader
@@ -990,7 +994,7 @@
 		    });
     };
 
-    widget.refineFilter = function (action, item) {
+    widget.refineFilter = function (action, item, custom) {
 	widget = Retina.WidgetInstances.shockbrowse[1];
 	
 	// get the DOM space for the buttons
@@ -1000,7 +1004,7 @@
 
 	    // add key and value to the filters
 	    var skeyList = document.getElementById('filter_key');
-	    var skey = skeyList.options[skeyList.selectedIndex].value;
+	    var skey = custom ? "_custom_" : skeyList.options[skeyList.selectedIndex].value;
 	    var sname = skeyList.options[skeyList.selectedIndex].text;
 	    var sval = document.getElementById('filter_value').value;
 
