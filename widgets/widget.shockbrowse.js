@@ -1016,6 +1016,16 @@
 		    return;
 		}
 	    }
+
+	    // if there is already a filter for this field, remove the button
+	    if (widget.filters.hasOwnProperty(skey)) {
+		// check if someone accidentally clicked add filter twice
+		if (widget.filters[skey] == sval) {
+		    return;
+		}
+		var old = document.getElementById('advFilter_'+skey);
+		old.parentNode.removeChild(old);
+	    }
 	    widget.filters[skey] = sval;
 
 	    // check if this is the first button
@@ -1086,6 +1096,7 @@
 	var node;
 	for (var i=0; i<widget.data.data.length; i++) {
 	    if (widget.data.data[i].id == id) {
+		widget.data.data[i].attributes = newNodeAttributes;
 		node = widget.data.data[i];
 		break;
 	    }
@@ -1226,9 +1237,9 @@
 	// get the selected file
 	var file = widget.uploadDialog.files[0];
 
-	var start = Retina.WidgetInstances.shockbrowse[1].currentUploadChunk * Retina.WidgetInstances.shockbrowse[1].uploadChunkSize,
-	end = ((start + Retina.WidgetInstances.shockbrowse[1].uploadChunkSize) >= file.size) ? file.size : start + Retina.WidgetInstances.shockbrowse[1].uploadChunkSize;
-	
+	var start = parseInt(Retina.WidgetInstances.shockbrowse[1].currentUploadChunk * parseInt(Retina.WidgetInstances.shockbrowse[1].uploadChunkSize)),
+	end = ((start + parseInt(Retina.WidgetInstances.shockbrowse[1].uploadChunkSize)) >= file.size) ? file.size : start + parseInt(Retina.WidgetInstances.shockbrowse[1].uploadChunkSize);
+
 	var blobSlice = File.prototype.slice || File.prototype.mozSlice || File.prototype.webkitSlice;
 	widget.fileReader.readAsArrayBuffer(blobSlice.call(file, start, end));
     };
