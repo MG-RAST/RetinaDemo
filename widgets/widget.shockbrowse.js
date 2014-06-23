@@ -11,7 +11,7 @@
 
   showFilter - boolean whether the filter section is visible, default is true
   showTitleBar - boolean whether the title bar is visible, default is true
-  showResizer - boolean whether the rezise buttons are visible, default is true
+  showResizer - boolean whether the rezise buttons and corner are visible, default is true
 
   enableUpload - boolean whether upload is enabled, default is true
   enableDownload - boolean whether download is enabled, default is true
@@ -75,9 +75,7 @@
     widget.fontSize = 13;
     widget.showFilter = true;
     widget.filterWidth = 232;
-    widget.sizes = { "small": [ 800, 400 ],
-		     "medium": [ 1200, 600 ],
-		     "large": [ 1550, 800 ] };
+    widget.sizes = { "small": [ 800, 400 ] };
 
     // upload status information
     widget.previewChunkSize = 2048; // 2 KB
@@ -207,7 +205,7 @@
 	}
 	widget.middle_section();
 	widget.bottom_section();
-	
+
 	if (! widget.data) {
 	    widget.updateData();
 	}
@@ -304,11 +302,9 @@
 	var resizer = document.createElement('div');
 	resizer.setAttribute('style', "float: left;");
 	resizer.innerHTML = '\
-<img src="Retina/images/box.png" style="margin-left: 10px; margin-right: 5px; width: 16px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'large\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'large\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
+<img src="Retina/images/box.png" style="margin-left: 10px; margin-right: 5px; width: 16px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=jQuery(window).width()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().left - 20;Retina.WidgetInstances.shockbrowse[1].height=jQuery(window).height()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().top - 20;Retina.WidgetInstances.shockbrowse[1].display();" title="fullscreen">\
 \
-<img src="Retina/images/box.png" style="margin-right: 5px; width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'medium\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'medium\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
-\
-<img src="Retina/images/box.png" style="width: 8px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();">\
+<img src="Retina/images/box.png" style="width: 8px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();" title="small">\
 ';
 	if (widget.showResizer) {
 	    section.appendChild(resizer);
@@ -402,6 +398,7 @@
 				      console.log( "error: unable to connect to SHOCK server" );
 				      console.log(error);
 				  },
+				  crossDomain: true,
 				  headers: widget.authHeader
 				});
 		} else {
@@ -635,8 +632,8 @@
 	    wA = parseInt(bar.previousSibling.style.width);
 	    wB = parseInt(bar.nextSibling.style.width);
 	    jQuery(document)
-		.bind("mousemove", doSplitMouse)
-		.bind("mouseup", endSplitMouse);
+		.on("mousemove", doSplitMouse)
+		.on("mouseup", endSplitMouse);
 	}
 	function doSplitMouse(evt) {
 	    bar.previousSibling.style.width = (wA - (start - evt.pageX)) + "px";
@@ -652,8 +649,8 @@
 		widget.fileWidth = bar.nextSibling.style.width;
 	    }
 	    jQuery(document)
-		.unbind("mousemove", doSplitMouse)
-		.unbind("mouseup", endSplitMouse);
+		.off("mousemove", doSplitMouse)
+		.off("mouseup", endSplitMouse);
 	}
 
 	bar.addEventListener('mousedown', startSplitMouse);
@@ -679,8 +676,28 @@
 
 	section.innerHTML = widget.status;
 
+	if (widget.showResizer) {
+	    var resizeCorner = document.createElement('div');
+	    resizeCorner.setAttribute('style', "cursor: nwse-resize; float: right; width: 20px; height: 16px; position: relative; top: 4px; left: 5px;");
+	    resizeCorner.innerHTML = "<img src='Retina/images/resizer.gif'>";
+	    function endResizeMouse(evt) {
+		var widget = Retina.WidgetInstances.shockbrowse[1];
+		widget.width = widget.width - (widget.startX - evt.screenX);
+		widget.height = widget.height - (widget.startY - evt.screenY);
+		widget.display();
+	    }
+	    function startResizeMouse(evt) {
+		var widget = Retina.WidgetInstances.shockbrowse[1];
+		widget.startX = evt.screenX;
+		widget.startY = evt.screenY;
+	    }
+	    resizeCorner.addEventListener('dragstart', startResizeMouse);
+	    resizeCorner.addEventListener('dragend', endResizeMouse);
+	    section.appendChild(resizeCorner);
+	}
+
 	var authContainer = document.createElement('div');
-	authContainer.setAttribute("style", "float: right; width: 100px; margin-right: 10px; height: 16px; position: relative; top: 2px; text-align: right;");
+	authContainer.setAttribute("style", "float: right; height: 16px; position: relative; top: 2px; text-align: right;");
 	if (widget.user) {
 	    authContainer.innerHTML = '<img src="Retina/images/lock.png" style="width: 16px; position: relative; bottom: 3px;" title="authenticated as '+widget.user.firstname+' '+widget.user.lastname+'">';
 	} else {
@@ -776,6 +793,7 @@
 			  console.log(error);
 			  widget.updateDisplay();
 		      },
+		      crossDomain: true,
 		      headers: widget.authHeader
 		    });
     };
@@ -859,6 +877,7 @@
 				  widget.detailInfo += "</div>";
 				  widget.showDetails(null, true);
 			      },
+			      crossDomain: true,
 			      headers: widget.authHeader
 			    });
 	    }
@@ -894,6 +913,7 @@
 				  }
 				  widget.showDetails(null, true);
 			      },
+			      crossDomain: true,
 			      headers: widget.authHeader
 			    });
 	    }
@@ -904,7 +924,7 @@
 
     widget.aclDetail = function(data, node) {
 	var html = "<table style='font-size: 13px; width: 100%;'>";
-	html += "<tr><td style='padding-right: 20px;'><b>owner</b></td><td>"+(data.data.owner.match(/\|/) ? data.data.owner.split("|")[0] : data.data.owner)+"<button class='btn btn-mini btn-danger pull-right' onclick='if(confirm(\"really delete this node?\")){Retina.WidgetInstances.shockbrowse[1].removeNode({node:\""+node+"\"});}'>delete node</button></td><td style='text-align: right;'><button class='btn btn-mini' onclick='Retina.WidgetInstances.shockbrowse[1].addAcl({node:\""+node+"\",acl:\"owner\"});'>change owner</button></td></tr>";
+	html += "<tr><td style='padding-right: 20px;'><b>owner</b></td><td>"+(data.data.owner.match(/\|/) ? data.data.owner.split("|")[0] : data.data.owner)+"</td><td style='text-align: right;'><button class='btn btn-mini' onclick='Retina.WidgetInstances.shockbrowse[1].addAcl({node:\""+node+"\",acl:\"owner\"});'>change owner</button></td></tr>";
 	var rights = ["read","write","delete"];
 	for (var i=0; i<rights.length; i++) {
 	    html += "<tr><td style='padding-right: 20px; vertical-align: top;'><b>"+rights[i]+"</b></td><td><table style='width: 100%;'>";
@@ -916,6 +936,10 @@
 	    }
 	    html += "</table></td><td style='vertical-align: top; text-align: right;'><button class='btn btn-mini' onclick='Retina.WidgetInstances.shockbrowse[1].addAcl({node:\""+node+"\",acl:\""+rights[i]+"\"});'>add</button></td></tr>";
 	}
+	html += "</table>";
+
+	html += "<br><br><div style='text-align: center;'><button class='btn btn-mini btn-danger' onclick='if(confirm(\"really delete this node?\")){Retina.WidgetInstances.shockbrowse[1].removeNode({node:\""+node+"\"});}'>delete node</button></div>";
+	
 	return html;
     };
 
@@ -932,6 +956,7 @@
 			  var widget = Retina.WidgetInstances.shockbrowse[1];
 			  widget.showDetails(null, true);
 		      },
+		      crossDomain: true,
 		      headers: widget.authHeader,
 		      type: "DELETE"
 		    });
@@ -951,6 +976,7 @@
 			  var widget = Retina.WidgetInstances.shockbrowse[1];
 			  widget.showDetails(null, true);
 		      },
+		      crossDomain: true,
 		      headers: widget.authHeader,
 		      type: "DELETE"
 		    });
@@ -972,6 +998,7 @@
 			      var widget = Retina.WidgetInstances.shockbrowse[1];
 			      widget.showDetails(null, true);
 			  },
+			  crossDomain: true,
 			  headers: widget.authHeader,
 			  type: "PUT"
 			});
@@ -989,6 +1016,7 @@
 		      error: function(jqXHR, error) {
 			  
 		      },
+		      crossDomain: true,
 		      headers: widget.authHeader,
 		      type: "GET"
 		    });
@@ -1119,6 +1147,7 @@
 		console.log(error);
 		console.log(jqXHR);
 	    },
+	    crossDomain: true,
 	    headers: Retina.WidgetInstances.shockbrowse[1].authHeader,
 	    type: "PUT"
 	});
@@ -1170,6 +1199,7 @@
 	    error: function(jqXHR, error){
 		Retina.WidgetInstances.shockbrowse[1].uploadDone(null, error);
 	    },
+	    crossDomain: true,
 	    headers: Retina.WidgetInstances.shockbrowse[1].authHeader,
 	    type: "POST"
 	});
@@ -1229,6 +1259,7 @@
 		error: function(jqXHR, error){
 		    Retina.WidgetInstances.shockbrowse[1].uploadDone(null, error);
 		},
+		crossDomain: true,
 		headers: Retina.WidgetInstances.shockbrowse[1].authHeader,
 		type: "PUT"
 	    });
@@ -1368,6 +1399,7 @@
 		    console.log(error);
 		    console.log(jqXHR);
 		},
+		crossDomain: true,
 		headers: Retina.WidgetInstances.shockbrowse[1].authHeader,
 		type: "PUT"
 	    });
@@ -1526,6 +1558,7 @@
 			  console.log(error);
 			  widget.displayResumableUploads(null, error);
 		      },
+		      crossDomain: true,
 		      headers: widget.authHeader
 		    });
     };
