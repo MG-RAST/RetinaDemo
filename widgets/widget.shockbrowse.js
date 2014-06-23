@@ -302,9 +302,9 @@
 	var resizer = document.createElement('div');
 	resizer.setAttribute('style', "float: left;");
 	resizer.innerHTML = '\
-<img src="Retina/images/box.png" style="margin-left: 10px; margin-right: 5px; width: 16px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=jQuery(window).width()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().left - 20;Retina.WidgetInstances.shockbrowse[1].height=jQuery(window).height()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().top - 20;Retina.WidgetInstances.shockbrowse[1].display();" title="fullscreen">\
+<img src="Retina/images/expand.png" style="margin-left: 7px; margin-right: 5px; width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=jQuery(window).width()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().left - 20;Retina.WidgetInstances.shockbrowse[1].height=jQuery(window).height()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().top - 20;Retina.WidgetInstances.shockbrowse[1].display();" title="fullscreen">\
 \
-<img src="Retina/images/box.png" style="width: 8px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();" title="small">\
+<img src="Retina/images/contract.png" style="width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();" title="small">\
 ';
 	if (widget.showResizer) {
 	    section.appendChild(resizer);
