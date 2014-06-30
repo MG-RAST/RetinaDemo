@@ -31,6 +31,7 @@
 
   presetFilters - hash of field name -> field value that is always added to the filter
   querymode - [ full | attributes ] determines which part of the node to search in, default is attributes
+  keylist - array of hashes of items in the filter list. The form of the hash is { "name": "$filter_url_param", "value": "$label_in_filter_list" },
 
   previewChunkSize - size in bytes that is loaded from the server for the preview of a file, default is 2 KB
   uploadChunkSize - size in bytes uploaded to the server per chunk, default is 10 MB
