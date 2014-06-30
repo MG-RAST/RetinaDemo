@@ -906,12 +906,19 @@
 				  }
 				  widget.showDetails(null, true);
 			      },
-			      error: function(jqXHR, error) {
+			      error: function(jqXHR) {
+				  var error = "";
+				  try {
+				      error = JSON.parse(jqXHR.responseText);
+				      error = error.error;
+				  } catch (er) {
+				      console.log(er);
+				  }
 				  var widget = Retina.WidgetInstances.shockbrowse[1];
 				  if (typeof widget.customPreview == 'function') {
 				      widget.detailInfo = widget.customPreview.call(null, { "node": node, "data": null, "error": error });
 				  } else {
-				      widget.detailInfo = "<div class='alert alert-error'>unable to retrieve preview data</div>";
+				      widget.detailInfo = "<div class='alert alert-error' style='margin-top: 50px;'>unable to retrieve preview data: "+error+"</div>";
 				  }
 				  widget.showDetails(null, true);
 			      },
