@@ -31,6 +31,7 @@
 
   presetFilters - hash of field name -> field value that is always added to the filter
   querymode - [ full | attributes ] determines which part of the node to search in, default is attributes
+  keylist - array of hashes of items in the filter list. The form of the hash is { "name": "$filter_url_param", "value": "$label_in_filter_list" },
 
   previewChunkSize - size in bytes that is loaded from the server for the preview of a file, default is 2 KB
   uploadChunkSize - size in bytes uploaded to the server per chunk, default is 10 MB
@@ -174,6 +175,7 @@
 		    { "name": "file.name", "value": "filename" },
 		    { "name": "file.size", "value": "filesize" },
 		    { "name": "file.checksum.md5", "value": "md5" },
+		    { "name": "owner", "value": "owner" },
 		    { "name": "attributes.type", "value": "type" },
 		    { "name": "attributes.data_type", "value": "data type" },
 		    { "name": "attributes.status", "value": "status" },
@@ -302,9 +304,9 @@
 	var resizer = document.createElement('div');
 	resizer.setAttribute('style', "float: left;");
 	resizer.innerHTML = '\
-<img src="Retina/images/box.png" style="margin-left: 10px; margin-right: 5px; width: 16px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=jQuery(window).width()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().left - 20;Retina.WidgetInstances.shockbrowse[1].height=jQuery(window).height()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().top - 20;Retina.WidgetInstances.shockbrowse[1].display();" title="fullscreen">\
+<img src="Retina/images/expand.png" style="margin-left: 7px; margin-right: 5px; width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=jQuery(window).width()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().left - 20;Retina.WidgetInstances.shockbrowse[1].height=jQuery(window).height()-jQuery(Retina.WidgetInstances.shockbrowse[1].sections.browser).offset().top - 20;Retina.WidgetInstances.shockbrowse[1].display();" title="fullscreen">\
 \
-<img src="Retina/images/box.png" style="width: 8px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();" title="small">\
+<img src="Retina/images/contract.png" style="width: 12px; cursor: pointer;" onclick="Retina.WidgetInstances.shockbrowse[1].width=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][0];Retina.WidgetInstances.shockbrowse[1].height=Retina.WidgetInstances.shockbrowse[1].sizes[\'small\'][1];Retina.WidgetInstances.shockbrowse[1].display();" title="small">\
 ';
 	if (widget.showResizer) {
 	    section.appendChild(resizer);
@@ -904,12 +906,19 @@
 				  }
 				  widget.showDetails(null, true);
 			      },
-			      error: function(jqXHR, error) {
+			      error: function(jqXHR) {
+				  var error = "";
+				  try {
+				      error = JSON.parse(jqXHR.responseText);
+				      error = error.error;
+				  } catch (er) {
+				      console.log(er);
+				  }
 				  var widget = Retina.WidgetInstances.shockbrowse[1];
 				  if (typeof widget.customPreview == 'function') {
 				      widget.detailInfo = widget.customPreview.call(null, { "node": node, "data": null, "error": error });
 				  } else {
-				      widget.detailInfo = "<div class='alert alert-error'>unable to retrieve preview data</div>";
+				      widget.detailInfo = "<div class='alert alert-error' style='margin-top: 50px;'>unable to retrieve preview data: "+error+"</div>";
 				  }
 				  widget.showDetails(null, true);
 			      },
