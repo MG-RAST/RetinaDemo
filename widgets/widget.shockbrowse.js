@@ -174,6 +174,7 @@
 		    { "name": "file.name", "value": "filename" },
 		    { "name": "file.size", "value": "filesize" },
 		    { "name": "file.checksum.md5", "value": "md5" },
+		    { "name": "owner", "value": "owner" },
 		    { "name": "attributes.type", "value": "type" },
 		    { "name": "attributes.data_type", "value": "data type" },
 		    { "name": "attributes.status", "value": "status" },
