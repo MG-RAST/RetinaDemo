@@ -41,7 +41,7 @@
 
 */
 (function () {
-    widget = Retina.Widget.extend({
+    var widget = Retina.Widget.extend({
         about: {
             title: "SHOCK Browser Widget",
             name: "shockbrowse",
