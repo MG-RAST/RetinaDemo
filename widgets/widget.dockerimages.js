@@ -35,7 +35,7 @@
 
 	var result_columns = [ "name", "namespace", "repository", "tag", "base_image_tag", "docker version", "shock node id", "docker image id", "temporary", "Arch", "GitCommit", "GoVersion", "KernelVersion", "Os" , "Size" ];
 
-	result_table_filter = {};
+	var result_table_filter = {};
 	var disable_sort = {};
 	var nofilter = { 1: 1, 2: 1, 3: 1, 6: 1, 14: 1 };
 	for (var i=0;i<result_columns.length;i++) {
