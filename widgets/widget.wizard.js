@@ -49,11 +49,7 @@
 </div>';
 	    target.appendChild(progress);
 	    jQuery.getJSON('data/mg_mixs_public.json', function(data) {
-		for (var d in data) {
-                    if (data.hasOwnProperty(d)) {
-			stm.load_data({"data": data[d], "type": d});
-                    }
-		}
+		stm.import_data({ data: data });
 		widget.display(wparams);
             }).fail( function() {
 		stm.get_objects({"type": "metagenome", "options": {"status": "public", "verbosity": "mixs", "limit": '9999'}}).then(function() {

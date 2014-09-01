@@ -40,19 +40,15 @@
 </div>';
         target.appendChild(progress);
 	    jQuery.getJSON('data/mg_mixs_public.json', function(data) {
-	        for (var d in data) {
-                if (data.hasOwnProperty(d)) {
-                    stm.load_data({"data": data[d], "type": d});
-                }
-            }
-            widget.display(wparams);
-        }).fail( function() {
-            stm.get_objects({"type":"metagenome","options":{"status":"public","verbosity":"mixs","limit":'9999'}}).then(function(){
-                widget.display(wparams);
+	        stm.import_data({ data: data });
+		widget.display(wparams);
+            }).fail( function() {
+		stm.get_objects({"type":"metagenome","options":{"status":"public","verbosity":"mixs","limit":'9999'}}).then(function(){
+                    widget.display(wparams);
+		});
             });
-        });
-        return;
-    }
+            return;
+	}
 	
 	// parse the metadata for the metagenome select
 	var metagenome_data = [];
