@@ -1,5 +1,5 @@
 (function () {
-    widget = Retina.Widget.extend({
+    var widget = Retina.Widget.extend({
         about: {
                 title: "KEGG Mapper",
                 name: "kegg",
@@ -40,23 +40,19 @@
 </div>';
         target.appendChild(progress);
 	    jQuery.getJSON('data/mg_mixs_public.json', function(data) {
-	        for (var d in data) {
-                if (data.hasOwnProperty(d)) {
-                    stm.load_data({"data": data[d], "type": d});
-                }
-            }
-            widget.display(wparams);
-        }).fail( function() {
-            stm.get_objects({"type":"metagenome","options":{"status":"public","verbosity":"mixs","limit":'9999'}}).then(function(){
-                widget.display(wparams);
+	        stm.import_data({ data: data });
+		widget.display(wparams);
+            }).fail( function() {
+		stm.get_objects({"type":"metagenome","options":{"status":"public","verbosity":"mixs","limit":'9999'}}).then(function(){
+                    widget.display(wparams);
+		});
             });
-        });
-        return;
-    }
+            return;
+	}
 	
 	// parse the metadata for the metagenome select
 	var metagenome_data = [];
-	for (i in stm.DataStore["metagenome"]) {
+	for (var i in stm.DataStore["metagenome"]) {
 	    if (stm.DataStore["metagenome"].hasOwnProperty(i)) {
 		var md = { "name": stm.DataStore["metagenome"][i]["name"],
 			   "id": i,
@@ -214,10 +210,10 @@
 	    ids = widget.idsa.concat(widget.idsb);
 	}
 	var idgroup = [];
-	for (i=0;i<widget.idsa.length; i++) {
+	for (var i=0;i<widget.idsa.length; i++) {
 	    idgroup[widget.idsa[i]] = 0;
 	}
-	for (i=0;i<widget.idsb.length; i++) {
+	for (var i=0;i<widget.idsb.length; i++) {
 	    idgroup[widget.idsb[i]] = 1;
 	}
 
@@ -227,7 +223,7 @@
 	if (! stm.DataStore.hasOwnProperty('profile') ) {
 	    stm.DataStore.profile = [];
 	}
-	for (i=0;i<ids.length;i++) {
+	for (var i=0;i<ids.length;i++) {
 	    if (! stm.DataStore.profile.hasOwnProperty(ids[i]+"_function_KO") ) {
 		load_required.push(stm.get_objects( { type: 'profile', "id": ids[i], "options": { "source": "KO", "type": "function" } } ) );
 	    }
@@ -244,7 +240,7 @@
 	}
 
 	var ids_with_data = [];
-	for (i=0;i<ids.length;i++) {
+	for (var i=0;i<ids.length;i++) {
 	    if (stm.DataStore.profile[ids[i]+"_function_KO"].data.length > 0) {
 		ids_with_data.push(ids[i]);
 	    }
@@ -259,7 +255,7 @@
 	var theader = [ "Level 1", "Level 2", "Level 3", "Level 4" ];
 	var draw_data = [[],[]];
 	var td = [];
-	for (h=0;h<ids.length;h++) {
+	for (var h=0;h<ids.length;h++) {
 	    var grp = "A";
 	    if (idgroup[ids[h]] == 1) {
 		grp = "B";
@@ -267,7 +263,7 @@
 	    theader.push(stm.DataStore.metagenome[ids[h]].name+" ("+grp+")");
 	    
 	    var data = stm.DataStore.profile[ids[h]+"_function_KO"];
-	    for (i=0;i<data.data.length;i++) {
+	    for (var i=0;i<data.data.length;i++) {
 		if (! draw_data[idgroup[ids[h]]].hasOwnProperty(data.rows[i].id)) {
 		    draw_data[idgroup[ids[h]]][data.rows[i].id] = 0;
 		}
@@ -278,7 +274,7 @@
 		    td[data.rows[i].id][1] = data.rows[i].metadata.ontology[1];
 		    td[data.rows[i].id][2] = data.rows[i].metadata.ontology[2];
 		    td[data.rows[i].id][3] = data.rows[i].metadata.ontology[3];
-		    for (j=0;j<(ids.length+2);j++) {
+		    for (var j=0;j<(ids.length+2);j++) {
 			td[data.rows[i].id][j+4] = "0";
 		    }
 		}
@@ -288,7 +284,7 @@
 	}
 	theader.push('group a');
 	theader.push('group b');
-	for (i in td) {
+	for (var i in td) {
 	    if (td.hasOwnProperty(i)) {
 		tdata.push(td[i]);
 	    }
