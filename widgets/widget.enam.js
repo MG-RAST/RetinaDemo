@@ -15,10 +15,8 @@
 	    stm.DataStore.metagenome = {};
 	}
 
-	return [ Retina.add_renderer({"name": "heatmap", "resource": "Retina/renderers/",  "filename": "renderer.heatmap.js" }),
-  		 Retina.load_renderer("heatmap"),
-		 Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
-  		 Retina.load_renderer("listselect") ];
+	return [ Retina.load_renderer("heatmap"),
+		 Retina.load_renderer("listselect") ];
     };
 
     widget.offlineMode = true;

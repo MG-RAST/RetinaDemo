@@ -12,18 +12,16 @@
     <link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="Retina/css/jquery.svg.css">
     <script>
-    stm.init({ url: stm.Config.mgrast_api }, 1, "MG-RAST");
-	Retina.init( { library_resource: "Retina/js/" } ).then( function () {
-	    Retina.add_widget({"name": "login", "resource": "Retina/widgets/",  "filename": "widget.login.js"});
-	    Retina.load_widget("login").then( function() {
-		Retina.Widget.create('login', {"target": document.getElementById("login_space")});
-	    });
+stm.init({});
+stm.add_repository({ url: stm.Config.mgrast_api, name: "MG-RAST"});
+Retina.init({});
+Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
+    Retina.Widget.create('login', {"target": document.getElementById("login_space")});
+});
 
-	    Retina.add_widget({"name": "wizard", "resource": "widgets/",  "filename": "widget.wizard.js" });
-	    Retina.load_widget("wizard").then( function () {
-		Retina.Widget.create('wizard', { target: document.getElementById('content') });
-	    });
-	});
+Retina.load_widget("wizard").then( function () {
+    Retina.Widget.create('wizard', { target: document.getElementById('content') });
+});
     </script>
   </head>
   <body style="margin-top: 60px;">
