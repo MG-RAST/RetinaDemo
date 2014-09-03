@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Renderer Playground</title>
+    <link rel="icon" href="images/MGRAST_favicon.ico" type="image/x-icon">
+	<script src="Retina/js/jquery.min.js"></script>
+	<script src="js/config.js"></script>
+	<script src="Retina/js/stm.js"></script>
+	<script src="Retina/js/retina.js"></script>
+	<script src="Retina/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
+    <script>
+      jQuery( document ).ready(function(){
+	  stm.init({});
+	  stm.add_repository({ url: stm.Config.mgrast_api, name: "MG-RAST"});
+	  Retina.init( { library_resource: "Retina/js/" } ).then( function() {
+	      Retina.add_widget({"name": "RendererController", "resource": "Retina/widgets/",  "filename": "widget.RendererController.js"});
+	      Retina.load_widget("RendererController").then( function() {
+		  Retina.Widget.create('login', {"target": document.getElementById("login_space")});
+	      });
+	  });
+      });
+    </script>
+  </head>
+
+  <body style="margin-top: 60px;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+	<div class="container" style="width: 100%; padding-left: 10px;">
+          <img src="images/MGRAST_logo.png" style="float: left; background: black; margin-left: -10px; height: 55px;">
+    	  <a class="brand" href="#" style="color: white; cursor: default; margin-top: 8px; margin-left: 30px;">Ecological Network Association Map</a>
+          <span id="session_space" style="float: right; margin-right: 20px;"></span>
+	  <span id="login_space"></span>
+	</div>
+      </div>
+    </div>
+    <div id="content" style="padding-bottom: 100px; padding-left: 10px; padding-right: 10px;"></div>
+  </body>
+</html>
