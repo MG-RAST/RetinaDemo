@@ -1,5 +1,5 @@
 (function () {
-    widget = Retina.Widget.extend({
+    var widget = Retina.Widget.extend({
         about: {
                 title: "PNNL Mockup Widget",
                 name: "pnnl",

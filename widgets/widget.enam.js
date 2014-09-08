@@ -1,5 +1,5 @@
 (function () {
-    widget = Retina.Widget.extend({
+    var widget = Retina.Widget.extend({
         about: {
             title: "Ecological Network Association Map",
             name: "enam",
@@ -54,11 +54,7 @@
 	    if (Retina.keys(stm.DataStore.metagenome).length == 0) {
 		jQuery.get('data/enam.dump', function(data) {
 		    var new_data = JSON.parse(data.replace(/\n/g, ""));
-		    for (var h in new_data) {
-			if (new_data.hasOwnProperty(h)) {
-			    stm.load_data({ data: new_data[h], type: h});
-			}
-		    }
+		    stm.import_data({ merge: true, data: new_data });
 		}, 'text').fail(function(){
 		    if (confirm("The data for the offline mode could not be found.\nWould you like to switch to online mode?")) {
 			Retina.WidgetInstances.enam[1].offlineMode = false;
@@ -229,7 +225,7 @@
 								      document.getElementById('listselect_collapse').click();
 								  }
 								  widget.ids = data;
-								  mgs = [];
+								  var mgs = [];
 								  for (var i=0;i<widget.ids.length;i++) {
 								      mgs.push(stm.DataStore.metagenome[widget.ids[i]].name + " ("+widget.ids[i]+")");
 								  }

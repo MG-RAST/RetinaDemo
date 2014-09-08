@@ -1,5 +1,5 @@
 (function () {
-    widget = Retina.Widget.extend({
+    var widget = Retina.Widget.extend({
         about: {
                 title: "Rank Abundance Comparison",
                 name: "rankabundance",
@@ -24,6 +24,7 @@
     widget.groups = {};
     widget.stmid = "";
 
+    widget.functype = "organism";
     widget.level = "phylum";
     widget.evalue = "5";
     widget.alignmentLength = "15";
@@ -79,6 +80,10 @@
 								      promises.push(stm.get_objects({"type": "metagenome", "options": {"verbosity": "mixs","id": data[i]}}));
 								  }
 								  jQuery.when.apply(this, promises).then(function() {
+								      if (stm.error) {
+									  alert('data retrieval failed: '+stm.error);
+									  stm.error = null;
+								      }
 								      widget.ids = data;
 								      widget.display(wparams);
 								  });
@@ -93,15 +98,14 @@
 	    }
 	}
 	
-	// we have metagenomes, show the wizard
+	// we have metagenomes, show the result
 	else {
-	    widget.stmid = widget.ids.sort().join("_") + "_organism_"+widget.level+"_"+widget.source+"_"+widget.hittype+"_abundance_"+widget.evalue+"_"+widget.identity+"_"+widget.alignmentLength+"_0";
-	    
+	    widget.stmid = widget.ids.sort().join("_") + "_"+widget.functype+"_"+widget.level+"_"+widget.source+"_"+widget.hittype+"_abundance_"+widget.evalue+"_"+widget.identity+"_"+widget.alignmentLength+"_0";
 	    // check if all data is loaded
 	    if (stm.DataStore.hasOwnProperty('matrix') && stm.DataStore.matrix.hasOwnProperty(widget.stmid)) {
 		widget.render_graph(index);
 	    } else {
-		stm.get_objects({ "type": "matrix", "id": "organism", "options": {"source": widget.source, "id": widget.ids, "hit_type": widget.hittype, "result_type": "abundance", "group_level": widget.level, "evalue": widget.evalue, "identity": widget.identity, "length": widget.alignmentLength } }).then(function(){
+		stm.get_objects({ "type": "matrix", "id": widget.functype, "options": {"source": widget.source, "id": widget.ids, "hit_type": widget.hittype, "result_type": "abundance", "group_level": widget.level, "evalue": widget.evalue, "identity": widget.identity, "length": widget.alignmentLength } }).then(function(){
 		    if (document.getElementById('loading_status')) {
 			document.getElementById('loading_status').innerHTML = "";
 		    }
@@ -121,12 +125,30 @@
 	}
     };
 
-
     widget.render_menu = function (index) {
 	widget = Retina.WidgetInstances.rankabundance[index];
 
 	var query_params = '<div style="clear: both; margin-top: 280px; margin-left: 50px; margin-bottom: 30px;">\
-<span>level</span> <select id="level_select" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;">\
+<select class="span2" id="func_org_select" style="float: left;margin-left: 5px; margin-right: 5px; position: relative; top: 5px;" onchange="if(this.options[this.selectedIndex].value==\'organism\'){document.getElementById(\'funcdiv\').style.display=\'none\';document.getElementById(\'orgdiv\').style.display=\'\';}else{document.getElementById(\'funcdiv\').style.display=\'\';document.getElementById(\'orgdiv\').style.display=\'none\';}">\
+  <option selected>organism</option>\
+  <option>function</option>\
+</select>\
+<div id="funcdiv" class="pull-left" style="display: none;">\
+<span>level</span> <select id="function_level_select" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;">\
+  <option selected>level1</option>\
+  <option>level2</option>\
+  <option>level3</option>\
+  <option>function</option>\
+</select>\
+<span>source</span> <select id="function_source" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;" class="span2">\
+  <option selected>Subsystems</option>\
+  <option>NOG</option>\
+  <option>COG</option>\
+  <option>KO</option>\
+</select>\
+</div>\
+<div id="orgdiv" class="pull-left">\
+<span>level</span> <select id="organism_level_select" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;">\
   <option>domain</option>\
   <option selected>phylum</option>\
   <option>class</option>\
@@ -135,7 +157,7 @@
   <option>species</option>\
   <option>strain</option>\
 </select>\
-<span>source</span> <select id="source" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;" class="span2">\
+<span>source</span> <select id="organism_source" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;" class="span2">\
   <option selected>M5NR</option>\
   <option>M5RNA</option>\
   <option>RefSeq</option>\
@@ -151,6 +173,7 @@
   <option>LSU</option>\
   <option>SSU</option>\
 </select>\
+</div>\
 <span>hit type</span> <select id="hittype" style="margin-left: 5px; margin-right: 5px; position: relative; top: 5px;" class="span2">\
   <option selected>all</option>\
   <option>single</option>\
@@ -281,9 +304,12 @@
     };
 
     widget.reload = function () {
-	widget.level = document.getElementById('level_select').options[document.getElementById('level_select').selectedIndex].value;
+	var s = document.getElementById('func_org_select');
+	var funcorg = s.options[s.selectedIndex].value;
+	widget.functype = funcorg;
+	widget.level = document.getElementById(funcorg+'_level_select').options[document.getElementById(funcorg+'_level_select').selectedIndex].value;
 	widget.hittype = document.getElementById('hittype').options[document.getElementById('hittype').selectedIndex].value;
-	widget.source = document.getElementById('source').options[document.getElementById('source').selectedIndex].value;
+	widget.source = document.getElementById(funcorg+'_source').options[document.getElementById(funcorg+'_source').selectedIndex].value;
 	widget.evalue = document.getElementById('evalue').value;
 	widget.alignmentLength = document.getElementById('alignment').value;
 	widget.identity = document.getElementById('identity').value;

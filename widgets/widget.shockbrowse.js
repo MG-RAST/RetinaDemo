@@ -41,7 +41,7 @@
 
 */
 (function () {
-    widget = Retina.Widget.extend({
+    var widget = Retina.Widget.extend({
         about: {
             title: "SHOCK Browser Widget",
             name: "shockbrowse",
@@ -894,15 +894,20 @@
 	    if (widget.detailInfo) {
 		widget.detailInfo = null;
 	    } else {
+		if (node.file.size == 0) {
+		    widget.detailInfo = "<h4>preview - "+fn+"</h4><p>This node has no file</p>";
+		    widget.showDetails(null, true);
+		    return;
+		}
 		var url = widget.shockBase + "/node/" + node.id + "?download&index=size&part=1&chunksize="+widget.previewChunkSize;
 		jQuery.ajax({ url: url,
-			      success: function(data) {
+			      success: function(data, status, xhr) {
 				  var widget = Retina.WidgetInstances.shockbrowse[1];
 				  if (typeof widget.customPreview == 'function') {
 				      widget.detailInfo = widget.customPreview.call(null, { "node": node, "data": data, "error": null });
 				  } else {
 				      data = data.slice(0, widget.previewChunkSize);
-				      widget.detailInfo = "<h4>preview - "+node.file.name+"</h4><pre style='font-size: "+(widget.fontSize - 1)+"px;'>"+data+"</pre>";
+				      widget.detailInfo = "<h4>preview - "+(node.file.name || node.id)+"</h4><pre style='font-size: "+(widget.fontSize - 1)+"px;'>"+data+"</pre>";
 				  }
 				  widget.showDetails(null, true);
 			      },
