@@ -6,7 +6,7 @@ var RetinaConfig = {
 				    "url": "https://api.metagenomics.anl.gov?verbosity=verbose",
 				    "useHeader": false
 				  } },
-    "awe_url": "http://140.221.67.236",
+    "awe_url": "http://140.221.67.236:8000",
     "mgrast_api": "http://api.metagenomics.anl.gov",
     "shock_url": "http://shock.metagenomics.anl.gov",
     "kbase_api": "https://kbase.us/services/search-api/search",
