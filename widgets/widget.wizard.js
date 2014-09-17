@@ -9,19 +9,12 @@
     });
 
     widget.setup = function () {
-	return [ Retina.add_renderer({"name": "heatmap", "resource": "Retina/renderers/",  "filename": "renderer.heatmap.js" }),
-		 Retina.load_renderer("heatmap"),
-		 Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
+	return [ Retina.load_renderer("heatmap"),
 		 Retina.load_renderer("listselect"),
-		 Retina.add_renderer({"name": "table", "resource": "Retina/renderers/",  "filename": "renderer.table.js" }),
 		 Retina.load_renderer("table"),
-		 Retina.add_renderer({"name": "plot", "resource": "Retina/renderers/",  "filename": "renderer.plot.js" }),
 		 Retina.load_renderer("plot"),
-		 Retina.add_renderer({"name": "graph", "resource": "Retina/renderers/",  "filename": "renderer.graph.js" }),
 		 Retina.load_renderer("graph"),
-		 Retina.add_renderer({"name": "deviationplot", "resource": "Retina/renderers/",  "filename": "renderer.deviationplot.js" }),
 		 Retina.load_renderer("deviationplot"),
-		 Retina.add_renderer({"name": "boxplot", "resource": "Retina/renderers/",  "filename": "renderer.boxplot.js" }),
 		 Retina.load_renderer("boxplot")
 	       ];
     };

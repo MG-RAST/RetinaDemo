@@ -9,11 +9,8 @@
     });
 
     widget.setup = function () {
-	return [ Retina.add_renderer({"name": "keggmap", "resource": "renderers/",  "filename": "renderer.keggmap.js" }),
-		 Retina.load_renderer("keggmap"),
-		 Retina.add_renderer({"name": "listselect", "resource": "Retina/renderers/",  "filename": "renderer.listselect.js" }),
+	return [ Retina.load_renderer({"name": "keggmap", "resource": "renderers/"}),
 		 Retina.load_renderer("listselect"),
-		 Retina.add_renderer({"name": "table", "resource": "Retina/renderers/",  "filename": "renderer.table.js" }),
 		 Retina.load_renderer("table")
 	       ];
     };

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Ecological Network Association Map</title>
+    <title>Renderer Playground</title>
     <link rel="icon" href="images/MGRAST_favicon.ico" type="image/x-icon">
 	<script src="Retina/js/jquery.min.js"></script>
 	<script src="js/config.js"></script>
@@ -11,22 +11,16 @@
 	<script src="Retina/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
     <script>
-    jQuery( document ).ready(function(){
-	stm.init({});
-	stm.add_repository({ url: stm.Config.mgrast_api, name: "MG-RAST"});
-	Retina.init({});
-	Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
-	    Retina.Widget.create('login', {"target": document.getElementById("login_space")});
-	});
-	
-	Retina.load_widget({"name": "session", "resource": "Retina/widgets/"}).then( function() {
-	    Retina.Widget.create('session', {"target": document.getElementById("session_space")});
-	});
-	
-	Retina.load_widget("enam").then( function() {
-	    Retina.Widget.create('enam', {"target": document.getElementById("content")});
-	});
-    });
+      jQuery( document ).ready(function(){
+	  stm.init({});
+	  stm.add_repository({ url: stm.Config.mgrast_api, name: "MG-RAST"});
+	  Retina.init( { library_resource: "Retina/js/" } ).then( function() {
+	      Retina.add_widget({"name": "RendererController", "resource": "Retina/widgets/",  "filename": "widget.RendererController.js"});
+	      Retina.load_widget("RendererController").then( function() {
+		  Retina.Widget.create('login', {"target": document.getElementById("login_space")});
+	      });
+	  });
+      });
     </script>
   </head>
 
