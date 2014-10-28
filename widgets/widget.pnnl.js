@@ -9,8 +9,7 @@
     });
     
     widget.setup = function () {
-	return [ Retina.add_widget({"name": "shockbrowse", "resource": "widgets/",  "filename": "widget.shockbrowse.js"}),
-		 Retina.load_widget("shockbrowse") ];
+	return [ Retina.load_widget("shockbrowse") ];
     };
         
     widget.display = function (wparams) {

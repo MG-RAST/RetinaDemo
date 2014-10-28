@@ -523,6 +523,8 @@
 	keyselect.innerHTML = keyselect_html;
 
 	widget.sections.filterSectionContent = sectionContent;
+	
+	widget.refineFilter('restore');
     };
 
     widget.file_section = function () {
@@ -593,6 +595,11 @@
 
     widget.detail_section = function () {
 	var widget = Retina.WidgetInstances.shockbrowse[1];
+
+	if (widget.preserveDetail) {
+	    widget.preserveDeatil = false;
+	    return;
+	}
 
 	var section;
 	if (widget.sections.detailSection) {
@@ -956,7 +963,7 @@
     };
 
     widget.removeAcl = function(params) {
-	widget = Retina.WidgetInstances.shockbrowse[1];
+	var widget = Retina.WidgetInstances.shockbrowse[1];
 	
 	var url = widget.shockBase + "/node/" + params.node + "/acl/"+params.acl+"?users="+params.uuid;
 	jQuery.ajax({ url: url,
@@ -976,7 +983,7 @@
     };
 
     widget.removeNode = function(params) {
-	widget = Retina.WidgetInstances.shockbrowse[1];
+	var widget = Retina.WidgetInstances.shockbrowse[1];
 	
 	var url = widget.shockBase + "/node/" + params.node;
 	jQuery.ajax({ url: url,
@@ -996,7 +1003,7 @@
     };
 
     widget.addAcl = function(params) {
-	widget = Retina.WidgetInstances.shockbrowse[1];
+	var widget = Retina.WidgetInstances.shockbrowse[1];
 
 	var uuid = prompt("Enter user id or uuid", "");
 	if (uuid) {
@@ -1018,7 +1025,7 @@
     };
 
     widget.checkForAttributesEditButton = function(node) {
-	widget = Retina.WidgetInstances.shockbrowse[1];
+	var widget = Retina.WidgetInstances.shockbrowse[1];
 
 	var url = widget.shockBase + "/node/" + node + "/acl";
 	jQuery.ajax({ url: url,
@@ -1035,7 +1042,7 @@
     };
 
     widget.refineFilter = function (action, item, custom) {
-	widget = Retina.WidgetInstances.shockbrowse[1];
+	var widget = Retina.WidgetInstances.shockbrowse[1];
 	
 	// get the DOM space for the buttons
 	var target = document.getElementById('refine_filter_terms');
@@ -1106,6 +1113,36 @@
 	} else if (action == "clear") {
 	    widget.filters = widget.presetFilters || {};
 	    target.innerHTML = "";
+	} else if (action == "restore") {
+	    target.innerHTML = "";
+	    var pf = widget.presetFilters || {};
+	    if (Retina.keys(widget.filters).length > Retina.keys(pf).length) {
+		var clear = document.createElement('button');
+		clear.className = "btn btn-small btn-danger";
+		clear.innerHTML = "clear filters";
+		clear.addEventListener('click', function () {
+		    Retina.WidgetInstances.shockbrowse[1].refineFilter("clear");
+		});
+		clear.setAttribute('style', "width: 100%; clear: both; margin-bottom: 20px; margin-top: -15px;");
+		target.appendChild(clear);
+		var k = Retina.keys(widget.filters);
+		for (var h=0; h<k.length; h++) {
+		    if (! pf.hasOwnProperty(k[h])) {
+			var button = document.createElement('button');
+			button.className = "btn btn-small";
+			button.setAttribute('style', "float: left; margin-right: 10px;");
+			button.innerHTML = k[h]+" - "+widget.filters[k[h]]+" <i class='icon icon-remove'></i>";
+			button.title = "click to remove";
+			button.setAttribute('id', 'advFilter_'+k[h]);
+			button.skey = k[h];
+			button.addEventListener('click', function() {
+			    Retina.WidgetInstances.shockbrowse[1].refineFilter("remove", this.skey);
+			});
+			target.appendChild(button);
+		    }
+		}
+	    }
+	    return;
 	} else {
 	    console.log("undefined action for refineFilter");
 	    return;
@@ -1404,8 +1441,12 @@
 		    section.appendChild(done);
 
 		    var checksum = document.createElement('div');
-		    checksum.innerHTML = "<h4>check md5-sum</h4><p>To check for file corruption paste the md5-sum of your local file into the textbox below and click <b>check</b>.</p><input type='text' disabled value='"+data.data.file.checksum.md5+"' class='span4'><div class='input-append'><input type='text' placeholder='paste md5 here' class='span4'><button class='btn' onclick='if(this.previousSibling.value==\""+data.data.file.checksum.md5+"\"){alert(\"file is OK\");}else{alert(\"file is corrupted!\");}'>check</button></div>";
+		    checksum.innerHTML = "<h4>check md5-sum</h4><p>To check for file corruption paste the md5-sum of your local file into the textbox below and click <b>check</b>.</p><input type='text' disabled value='"+data.data.file.checksum.md5+"' style='width: 240px;'><div class='input-append'><input type='text' placeholder='paste md5 here' style='width: 240px;'><button class='btn' onclick='if(this.previousSibling.value==\""+data.data.file.checksum.md5+"\"){alert(\"file is OK\");}else{alert(\"file is corrupted!\");}'>check</button></div>";
 		    section.appendChild(checksum);
+
+		    if (typeof Retina.WidgetInstances.shockbrowse[1].fileUploadCompletedCallback == 'function') {
+			Retina.WidgetInstances.shockbrowse[1].fileUploadCompletedCallback.call(null, data);
+		    }
 		},
 		error: function(jqXHR, error){
 		    console.log(error);
