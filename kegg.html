@@ -11,13 +11,12 @@
 	<script src="Retina/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
 	<script>
-    stm.init({ url: stm.Config.mgrast_api }, 1, "MG-RAST");
-	Retina.init( { library_resource: "Retina/js/" } ).then( function () {
-	    Retina.add_widget({"name": "kegg", "resource": "widgets/",  "filename": "widget.kegg.js" });
-	    Retina.load_widget("kegg").then( function () {
-		Retina.Widget.create('kegg', { target: document.getElementById('content') });
-	    });
-	});
+    stm.init({});
+stm.add_repository({ url: stm.Config.mgrast_api, name: "MG-RAST"});
+Retina.init({});
+Retina.load_widget("kegg").then( function () {
+    Retina.Widget.create('kegg', { target: document.getElementById('content') });
+});
 	</script>
   </head>
 <body style="margin-top: 60px; margin-bottom: 100px;">

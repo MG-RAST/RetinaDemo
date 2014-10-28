@@ -12,20 +12,17 @@
 	<link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="Retina/css/jsoneditor.min.css">
 	<script>
-    stm.init({ url: stm.Config.mgrast_api }, 1, "MG-RAST");
-Retina.init( { library_resource: "Retina/js/" } ).then( function() {
-    Retina.add_widget({"name": "shockbrowse", "resource": "widgets/",  "filename": "widget.shockbrowse.js"});
-    Retina.load_widget("shockbrowse").then( function() {
-	Retina.Widget.create('shockbrowse', {
-	    "target": document.getElementById("content"),
-	    "querymode": "full",
-	});
-	Retina.add_widget({"name": "login", "resource": "Retina/widgets/",  "filename": "widget.login.js"});
-	Retina.load_widget("login").then( function() {
-	    Retina.Widget.create('login', {
-		"target": document.getElementById("login_space"), 
-		"callback": Retina.WidgetInstances.shockbrowse[1].loginAction
-	    });
+stm.init({});
+Retina.init({});
+Retina.load_widget("shockbrowse").then( function() {
+    Retina.Widget.create('shockbrowse', {
+	"target": document.getElementById("content"),
+	"querymode": "full",
+    });
+    Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
+	Retina.Widget.create('login', {
+	    "target": document.getElementById("login_space"), 
+	    "callback": Retina.WidgetInstances.shockbrowse[1].loginAction
 	});
     });
 });
