@@ -24,7 +24,7 @@
 	  stm.init({});
 	  Retina.init( {} );
 	  Retina.load_widget({ name: "RendererController", resource: "Retina/widgets/" }).then( function() {
-	      Retina.Widget.create('RendererController', {target: document.getElementById("playground"), type: "plot"});
+	      Retina.Widget.create('RendererController', {target: document.getElementById("playground"), type: "graph"});
 	  });
       });
     </script>
@@ -199,8 +199,8 @@
       
       <h4>Select Renderer</h4>
       <select onchange="Retina.WidgetInstances.RendererController[1].params.type=this.options[this.selectedIndex].value;Retina.WidgetInstances.RendererController[1].display();">
-	<option>plot</option>
 	<option>graph</option>
+	<option>plot</option>
 	<option>table</option>
 	<option>boxplot</option>
 	<option>deviationplot</option>
