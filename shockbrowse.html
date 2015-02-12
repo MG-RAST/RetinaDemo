@@ -15,15 +15,31 @@
 stm.init({});
 Retina.init({});
 Retina.load_widget("shockbrowse").then( function() {
-    Retina.Widget.create('shockbrowse', {
+    var sb = Retina.Widget.create('shockbrowse', {
 	"target": document.getElementById("content"),
 	"querymode": "full",
     });
     Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
-	Retina.Widget.create('login', {
-	    "target": document.getElementById("login_space"), 
-	    "callback": Retina.WidgetInstances.shockbrowse[1].loginAction
-	});
+	var loginAction = function (data) {
+	    if (data.action != "logout" && data.result == "success") {
+		if (stm.user && stm.user.hasOwnProperty("preferences")) {
+		    mgp.display({ "main": document.getElementById("content"),
+				  "sidebar": document.getElementById("sidebar") });
+		    return;
+		}
+		stm.user = data.user;
+		stm.authHeader = { "Auth": data.token };
+		stm.SHOCKAWEAuth = { "Authorization": "mgrast "+data.token};
+	    } else {
+		stm.user = null;
+		stm.authHeader = {};
+		stm.SHOCKAWEAuth = {};
+	    }
+	    sb.authHeader = stm.SHOCKAWEAuth;
+	    sb.display();
+	};
+	Retina.Widget.create('login', { "target": document.getElementById("login_space"),
+		    			"callback": loginAction });
     });
 });
 	</script>

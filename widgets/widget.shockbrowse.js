@@ -732,7 +732,7 @@
 	    widget.user = action.user;
 
 	    // set authentication
-	    widget.authHeader = { "Authorization": "OAuth "+action.token };
+	    widget.authHeader = action.authHeader;
 
 	    if (widget.enableUpload) {
 		// enable functions only available when logged in
@@ -1005,22 +1005,27 @@
     widget.addAcl = function(params) {
 	var widget = Retina.WidgetInstances.shockbrowse[1];
 
-	var uuid = prompt("Enter user id or uuid", "");
+	var uuid = params.uuid || prompt("Enter user id or uuid", "");
 	if (uuid) {
 	    var url = widget.shockBase + "/node/" + params.node + "/acl/"+params.acl+"?users="+uuid;
+	    var promise = jQuery.Deferred();
 	    jQuery.ajax({ url: url,
+			  promise: promise,
 			  success: function(data) {
 			      var widget = Retina.WidgetInstances.shockbrowse[1];
 			      widget.showDetails(null, true);
+			      this.promise.resolve();
 			  },
 			  error: function(jqXHR, error) {
 			      var widget = Retina.WidgetInstances.shockbrowse[1];
 			      widget.showDetails(null, true);
+			      this.promise.resolve();
 			  },
 			  crossDomain: true,
 			  headers: widget.authHeader,
 			  type: "PUT"
 			});
+	    return promise;
 	}
     };
 
