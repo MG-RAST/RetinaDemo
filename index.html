@@ -6,6 +6,8 @@
     <link rel="icon" href="images/MGRAST_favicon.ico" type="image/x-icon">
     <script src="Retina/js/jquery.min.js"></script>
     <script src="Retina/js/bootstrap.min.js"></script>
+    <script src="Retina/js/stm.js"></script>
+    <script src="Retina/js/retina.js"></script>
     <link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
     <style>
       .preview {
@@ -17,6 +19,15 @@
       padding-right: 50px;
       }
     </style>
+    <script>
+      jQuery( document ).ready(function(){
+	  stm.init({});
+	  Retina.init( {} );
+	  Retina.load_widget({ name: "RendererController", resource: "Retina/widgets/" }).then( function() {
+	      Retina.Widget.create('RendererController', {target: document.getElementById("playground"), type: "graph"});
+	  });
+      });
+    </script>
   </head>
   <body style="margin-top: 60px;">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -184,8 +195,23 @@
 	</table>
       </div>
 
-      <h2>Renderers</h2>
-
+      <h2>Renderer Playground</h2>
+      
+      <h4>Select Renderer</h4>
+      <select onchange="Retina.WidgetInstances.RendererController[1].params.type=this.options[this.selectedIndex].value;Retina.WidgetInstances.RendererController[1].display();">
+	<option>graph</option>
+	<option>plot</option>
+	<option>table</option>
+	<option>boxplot</option>
+	<option>deviationplot</option>
+	<option>donut</option>
+	<option>heatmap</option>
+	<option>matrix</option>
+	<option>tree</option>
+	<option>listselect</option>
+	<option>groupselect</option>
+      </select>
+      <div id="playground"></div>
 
     </div>
 </html>

@@ -13,12 +13,9 @@
     <script>
       jQuery( document ).ready(function(){
 	  stm.init({});
-	  stm.add_repository({ url: stm.Config.mgrast_api, name: "MG-RAST"});
-	  Retina.init( { library_resource: "Retina/js/" } ).then( function() {
-	      Retina.add_widget({"name": "RendererController", "resource": "Retina/widgets/",  "filename": "widget.RendererController.js"});
-	      Retina.load_widget("RendererController").then( function() {
-		  Retina.Widget.create('login', {"target": document.getElementById("login_space")});
-	      });
+	  Retina.init( {} );
+	  Retina.load_widget({ name: "RendererController", resource: "Retina/widgets/" }).then( function() {
+	      Retina.Widget.create('RendererController', {target: document.getElementById("playground"), type: "plot"});
 	  });
       });
     </script>
@@ -29,12 +26,24 @@
       <div class="navbar-inner">
 	<div class="container" style="width: 100%; padding-left: 10px;">
           <img src="images/MGRAST_logo.png" style="float: left; background: black; margin-left: -10px; height: 55px;">
-    	  <a class="brand" href="#" style="color: white; cursor: default; margin-top: 8px; margin-left: 30px;">Ecological Network Association Map</a>
-          <span id="session_space" style="float: right; margin-right: 20px;"></span>
-	  <span id="login_space"></span>
+    	  <a class="brand" href="#" style="color: white; cursor: default; margin-top: 8px; margin-left: 30px;">Renderer Playground</a>
 	</div>
       </div>
     </div>
-    <div id="content" style="padding-bottom: 100px; padding-left: 10px; padding-right: 10px;"></div>
+    <div id="content" style="padding-bottom: 100px; padding-left: 10px; padding-right: 10px;">
+      <h4>Select Renderer</h4>
+      <select onchange="Retina.WidgetInstances.RendererController[1].params.type=this.options[this.selectedIndex].value;Retina.WidgetInstances.RendererController[1].display();">
+	<option>plot</option>
+	<option>graph</option>
+	<option>table</option>
+	<option>boxplot</option>
+	<option>deviationplot</option>
+	<option>donut</option>
+	<option>heatmap</option>
+	<option>matrix</option>
+	<option>tree</option>
+      </select>
+      <div id="playground"></div>
+    </div>
   </body>
 </html>

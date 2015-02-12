@@ -37,10 +37,10 @@
 	var disable_sort = {};
 	var nofilter = { 1: 1, 2: 1, 3: 1, 6: 1, 14: 1 };
 	for (var i=0;i<result_columns.length;i++) {
-	    disable_sort[i] = true;
-	    if (nofilter[i]) {
-		continue;
-	    }
+	    //disable_sort[i] = true;
+	    //if (nofilter[i]) {
+	//	continue;
+	   // }
 	    result_table_filter[i] = { "type": "text" };
 	}
 	widget.result_table = Retina.Renderer.create("table", {
