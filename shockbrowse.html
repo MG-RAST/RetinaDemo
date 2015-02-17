@@ -22,20 +22,13 @@ Retina.load_widget("shockbrowse").then( function() {
     Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
 	var loginAction = function (data) {
 	    if (data.action != "logout" && data.result == "success") {
-		if (stm.user && stm.user.hasOwnProperty("preferences")) {
-		    mgp.display({ "main": document.getElementById("content"),
-				  "sidebar": document.getElementById("sidebar") });
-		    return;
-		}
 		stm.user = data.user;
-		stm.authHeader = { "Auth": data.token };
-		stm.SHOCKAWEAuth = { "Authorization": "mgrast "+data.token};
+		stm.authHeader = { "Authorization": "mgrast "+data.token};
 	    } else {
 		stm.user = null;
 		stm.authHeader = {};
-		stm.SHOCKAWEAuth = {};
 	    }
-	    sb.authHeader = stm.SHOCKAWEAuth;
+	    sb.authHeader = stm.authHeader;
 	    sb.display();
 	};
 	Retina.Widget.create('login', { "target": document.getElementById("login_space"),
