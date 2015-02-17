@@ -14,9 +14,24 @@
     stm.init({});
 Retina.init({});
 Retina.load_widget("dockerimages").then( function() {
-    Retina.Widget.create('dockerimages', {"target": document.getElementById("content"), "fileUpload": document.getElementById('fu'), "type":"table", "wide": true});
+    var dock = Retina.Widget.create('dockerimages', {"target": document.getElementById("content"), "fileUpload": document.getElementById('fu'), "type":"table", "wide": true});
+    var loginAction = function (data) {
+	if (data.action != "logout" && data.result == "success") {
+	    if (stm.user && stm.user.hasOwnProperty("preferences")) {
+		dock.display();
+		return;
+	    }
+	    stm.user = data.user;
+	    stm.authHeader = { "Authorization": "mgrast "+data.token};
+	    dock.display();
+	} else {
+	    stm.user = null;
+	    stm.authHeader = {};
+	    dock.display();
+	}
+    };
     Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
-	Retina.Widget.create('login', {"target": document.getElementById("login_space"), "callback": Retina.WidgetInstances.dockerimages[1].loginAction });
+	Retina.Widget.create('login', {"target": document.getElementById("login_space"), "callback": loginAction });
     });
 });
 	</script>

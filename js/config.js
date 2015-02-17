@@ -3,8 +3,8 @@ var RetinaConfig = {
 		       "MG-RAST": { "icon": "MGRAST_favicon.ico",
 				    "prefix": "mggo4711",
 				    "keyword": "auth",
-				    "url": "https://api.metagenomics.anl.gov?verbosity=verbose",
-				    "useHeader": false
+				    "url": "http://api.metagenomics.anl.gov?verbosity=verbose",
+				    "useHeader": true
 				  } },
     "awe_url": "http://140.221.67.236:8000",
     "mgrast_api": "http://api.metagenomics.anl.gov",
