@@ -15,8 +15,6 @@
 	];
     };
 
-    widget.authHeader = {};
-
     widget.shock_base = "http://shock.metagenomics.anl.gov/node";
     widget.shock_url = widget.shock_base + "?query&type=dockerimage";
     
@@ -31,11 +29,11 @@
 	    Retina.WidgetInstances.login[1].callback = Retina.WidgetInstances.dockerimages[1].update;
 	}
 
-	var result_columns = [ "name", "namespace", "repository", "tag", "base_image_tag", "docker version", "shock node id", "docker image id", "temporary", "Arch", "GitCommit", "GoVersion", "KernelVersion", "Os" , "Size" ];
+	var result_columns = [ "name", "namespace", "repository", "tag", "base_image_tag", "docker version", "shock node id", "docker image id", "temporary", "Arch", "Size" ];
 
 	var result_table_filter = {};
 	var disable_sort = {};
-	var nofilter = { 1: 1, 2: 1, 3: 1, 6: 1, 14: 1 };
+	var nofilter = { 1: 1, 2: 1, 3: 1, 6: 1 };
 	for (var i=0;i<result_columns.length;i++) {
 	    //disable_sort[i] = true;
 	    //if (nofilter[i]) {
@@ -52,18 +50,14 @@
 	    synchronous: false,
 	    disable_sort: disable_sort,
 	    query_type: 'prefix',
-	    headers: widget.authHeader,
+	    headers: stm.authHeader,
 	    data_manipulation: widget.dataManipulation,
 	    asynch_column_mapping: { "name": "name",
 				     "base_image_tag": "base_image_tag",
-				     "docker version": "docker_version.Version",
+				     "docker version": "image.DockerVersion",
 				     "docker image id": "id",
 				     "temporary": "temporary",
-				     "Arch": "docker_version.Arch",
-				     "GitCommit": "docker_version.GitCommit",
-				     "GoVersion": "docker_version.GoVersion",
-				     "KernelVersion": "docker_version.KernelVersion",
-				     "Os": "docker_version.Os" },
+				     "Arch": "image.Architecture" },
 	    navigation_url: widget.shock_url,
 	    invisible_columns: { 0:  1,
 				 5:  1, //docker version
@@ -111,15 +105,11 @@
 			    "repository" : repository_name,
 			    "tag" : repository_tag,
 			    "base_image_tag": data[i].attributes.base_image_tag,
-			    "docker version": data[i].attributes.docker_version.Version,
+			    "docker version": data[i].attributes.image ? data[i].attributes.image.DockerVersion : "-",
 			    "shock node id": idfield,
 			    "docker image id" : data[i].attributes.id,
 			    "temporary": data[i].attributes.temporary,
-			    "Arch": data[i].attributes.docker_version.Arch,
-			    "GitCommit": data[i].attributes.docker_version.GitCommit,
-			    "GoVersion": data[i].attributes.docker_version.GoVersion,
-			    "KernelVersion": data[i].attributes.docker_version.KernelVersion,
-			    "Os": data[i].attributes.docker_version.Os,
+			    "Arch": data[i].attributes.image ? data[i].attributes.image.Architecture : "-",
 			    "Size": data[i].file.size.byteSize() });
 	}
 	return new_data;
