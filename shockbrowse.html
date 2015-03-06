@@ -14,7 +14,7 @@
 	<script>
 stm.init({});
 Retina.init({});
-Retina.load_widget("shockbrowse").then( function() {
+Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( function() {
     var sb = Retina.Widget.create('shockbrowse', {
 	"target": document.getElementById("content"),
 	"querymode": "full",
