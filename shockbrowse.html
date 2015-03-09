@@ -18,6 +18,11 @@ Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( fun
     var sb = Retina.Widget.create('shockbrowse', {
 	"target": document.getElementById("content"),
 	"querymode": "full",
+	"fileSectionColumns": [
+	    { "path": "file.name", "name": "Name", "width": "50%", "type": "file" },
+	    { "path": "file.size", "name": "Size", "width": "25%", "type": "size", "align": "right" },
+	    { "path": "created_on", "name": "Date Created", "width": "25%", "type": "date", "align": "left" },
+			      ]
     });
     Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
 	var loginAction = function (data) {
