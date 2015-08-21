@@ -38,6 +38,7 @@ Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( fun
 		stm.authHeader = {};
 	    }
 	    sb.authHeader = stm.authHeader;
+	    sb.dataUpdateRequest.abort();
 	    sb.display();
 	};
 	Retina.Widget.create('login', { "target": document.getElementById("login_space"),
