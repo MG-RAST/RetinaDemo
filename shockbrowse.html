@@ -20,6 +20,8 @@ Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( fun
 	"order": "created_on",
 	"direction": "desc",
 	"querymode": "full",
+	"allowMultiselect": true,
+	"autoSizeAtStartup": true,
 	"fileSectionColumns": [
 	    { "path": "file.name", "name": "Name", "width": "50%", "type": "file", "sortable": true },
 	    { "path": "file.size", "name": "Size", "width": "25%", "type": "size", "align": "right", "sortable": true },
