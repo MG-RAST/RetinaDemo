@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Shock Browser</title>
+    <title>Docker Image Browser</title>
     <link rel="icon" href="images/MGRAST_favicon.ico" type="image/x-icon">
 	<script src="Retina/js/jquery.min.js"></script>
 	<script src="js/config.js"></script>
@@ -17,15 +17,24 @@ Retina.init({});
 Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( function() {
     var sb = Retina.Widget.create('shockbrowse', {
 	"target": document.getElementById("content"),
-	"order": "created_on",
-	"direction": "desc",
+	"title": "Dockerimages",
+	"initialFileDetailRatio": 0.6,
+	"showDetailPreview": false,
 	"querymode": "full",
-	"allowMultiselect": true,
-	"autoSizeAtStartup": true,
+        "order": "attributes.repository",
+        "direction": "asc",
+        "allowMultiselect": true,
+	"presetFilters": { "attributes.type": "dockerimage" },
+	"keylist": [
+	    { "name": "attributes.repository", "value": "Repository" },
+	    { "name": "attributes.tag", "value": "Tag" },
+	    { "name": "attributes.image.Architecture", "value": "Arch" },
+	],
 	"fileSectionColumns": [
-	    { "path": "file.name", "name": "Name", "width": "50%", "type": "file", "sortable": true },
-	    { "path": "file.size", "name": "Size", "width": "25%", "type": "size", "align": "right", "sortable": true },
-	    { "path": "created_on", "name": "Date Created", "width": "25%", "type": "date", "align": "left", "sortable": true },
+	    { "path": "attributes.repository", "name": "Repository", "width": "40%", "type": "string", "align": "left", "sortable": true },
+	    { "path": "attributes.tag", "name": "Tag", "width": "25%", "type": "string", "align": "left", "sortable": true },
+	    { "path": "file.size", "name": "Size", "width": "15%", "type": "size", "align": "right", "sortable": true },
+	    { "path": "created_on", "name": "Created On", "width": "20%", "type": "date", "align": "left", "sortable": true },
 			      ]
     });
     Retina.load_widget({"name": "login", "resource": "Retina/widgets/"}).then( function() {
@@ -38,7 +47,6 @@ Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( fun
 		stm.authHeader = {};
 	    }
 	    sb.authHeader = stm.authHeader;
-	    sb.dataUpdateRequest.abort();
 	    sb.display();
 	};
 	Retina.Widget.create('login', { "target": document.getElementById("login_space"),
@@ -53,7 +61,7 @@ Retina.load_widget({ name: "shockbrowse", resource: "Retina/widgets"}).then( fun
       <div class="navbar-inner">
   	    <div class="container" style="width: 100%; padding-left: 10px;">
           <img src="images/MGRAST_logo.png" style="float: left; background: black; margin-left: -10px; height: 55px;">
-      	  <a class="brand" href="#" style="color: white; cursor: default; margin-top: 8px; margin-left: 30px;">Shock Browser</a>
+      	  <a class="brand" href="#" style="color: white; cursor: default; margin-top: 8px; margin-left: 30px;">Docker Image Browser</a>
   	      <span id='login_space'></span>
   	    </div>
       </div>

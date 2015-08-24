@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Renderer Testpage</title>
+    <script src="Retina/js/jquery.min.js"></script>
+    <script src="Retina/js/config.js"></script>
+    <script src="Retina/js/stm.js"></script>
+    <script src="Retina/js/retina.js"></script>
+    <script src="Retina/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="Retina/css/bootstrap.min.css">
+    <script>
+      Retina.init({});
+Retina.load_renderer("slider").then(
+    function(){
+	Retina.Renderer.create("slider", {target: document.getElementById("content")}).render();
+    });
+    </script>
+  </head>
+  
+  <body>
+    <div id="content" style="margin: 100px;"></div>
+  </body>
+</html>
