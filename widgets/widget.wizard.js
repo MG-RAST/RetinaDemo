@@ -45,7 +45,7 @@
 		stm.import_data({ data: data });
 		widget.display(wparams);
             }).fail( function() {
-		stm.get_objects({"type": "metagenome", "options": {"status": "public", "verbosity": "mixs", "limit": '9999'}}).then(function() {
+		stm.get_objects({"type": "metagenome", "options": {"status": "public", "verbosity": "mixs", "limit": '999'}}).then(function() {
                     widget.display(wparams);
 		});
 	    });
@@ -784,6 +784,9 @@ With the KBase metagenomics wizard, you can design your metagenomic sequencing e
 	    //var data = stm.DataStore.abundanceprofile[ids[h]+"_"+type+"_"+source];
 	    var data = stm.DataStore.matrix[ids[h]+"_"+type+"_"+group+"_"+source+"_"+hit+"_abundance_5_60_15_0"];
 	    for (i=0;i<data.data.length;i++) {
+		if (! data.rows[i].metadata.hasOwnProperty(md_field)) {
+		    continue;
+		}
 		if (params.filter_bacteria && ((data.rows[i].metadata[md_field][0] != 'Bacteria') && (data.rows[i].metadata[md_field][0] != 'Archaea'))) {
 		    continue;
 		}
